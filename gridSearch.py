@@ -35,7 +35,7 @@ train_data, test_data = data[:84], data[84:]
 def create_autoencoder(hp):
     model = Sequential()
     model.add(Dense(units=hp.Int('units_input', min_value=32, max_value=128, step=32), activation='relu', input_dim=train_data.shape[1]))
-    model.add(Dense(units=hp.Int('units_hidden', min_value=16, max_value=64, step=16), activation='relu'))
+    model.add(Dense(units=hp.Int('units_hidden', min_value=8, max_value=16, step=2), activation='relu'))
     model.add(Dense(units=hp.Int('units_output', min_value=32, max_value=128, step=32), activation='relu'))
     model.add(Dense(train_data.shape[1], activation='sigmoid'))
     model.compile(loss='mse', optimizer='adam')
