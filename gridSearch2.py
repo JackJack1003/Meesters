@@ -16,6 +16,14 @@ from scikeras.wrappers import KerasRegressor
 
 import pyedflib
 print('Starting')
+
+# best_loss=0
+# best_params= {   'batch_size': [8,16,32, 64, 128],
+#     'epochs': [20, 30, 40]}
+# text_to_append = 'Best loss: '+ str(best_loss)+ ' With params: '+str(best_params) 
+# with open("26_Sept.txt", "a") as file:
+#     # Append the text to the file
+#     file.write(text_to_append + "\n")
 data_files = ['chb01_01.edf', 'chb01_02.edf', 'chb01_03.edf', 'chb01_04.edf', 'chb01_05.edf','chb01_06.edf','chb01_07.edf','chb01_08.edf','chb01_09.edf','chb01_10.edf']
 data = []
 
@@ -56,19 +64,47 @@ param_grid = {
     'epochs': [20, 30, 40]
 }
 
-# Create a GridSearchCV instance
-grid_search = GridSearchCV(estimator=autoencoder, param_grid=param_grid, scoring='neg_mean_squared_error', cv=3)
+# # Create a GridSearchCV instance
+# grid_search = GridSearchCV(estimator=autoencoder, param_grid=param_grid, scoring='neg_mean_squared_error', cv=3)
 
-# Fit the grid search to your data
-grid_search.fit(train_data, train_data)
+# # Fit the grid search to your data
+# grid_search.fit(train_data, train_data)
 
+
+
+def fit_and_print_params(estimator, param_grid, scoring, cv):
+    best_loss = float('inf')
+    best_params = None
+    for i in range(0, len(param_grid["batch_size"])-2):
+        for j in range(0, len(param_grid["epochs"])-2):
+            batch = []
+            batch.append(param_grid["batch_size"][i])
+            batch.append(param_grid["batch_size"][i+1])
+            epoch = []
+            epoch.append(param_grid["epochs"][j])
+            epoch.append(param_grid["epochs"][j+1])
+            params = {"batch_size": batch, "epochs": epoch}
+            print("Evaluating parameter combination ",  params)
+            grid_search = GridSearchCV(estimator=estimator, param_grid=params, scoring=scoring, cv=cv)
+            grid_search.fit(train_data, train_data)
+            loss = grid_search.evaluate(test_data, test_data)
+            if (loss<best_loss): 
+                best_loss=loss
+                best_params= params
+                text_to_append = 'Best loss: '+ str(loss)+ ' With params: '+str(params) 
+                with open("26_Sept.txt", "a") as file:
+                    # Append the text to the file
+                    file.write(text_to_append + "\n")
+        
+
+fit_and_print_params(estimator=autoencoder, param_grid=param_grid, scoring='neg_mean_squared_error', cv=3)
 # Print the best hyperparameters
-print("Best Hyperparameters:")
-print(grid_search.best_params_)
+# print("Best Hyperparameters:")
+# print(grid_search.best_params_)
 
 # Retrieve the best model from the grid search
-best_model = grid_search.best_estimator_.model
+# best_model = grid_search.best_estimator_.model
 
 # Evaluate the best model
-loss = best_model.evaluate(test_data, test_data)
-print("Test Loss:", loss)
+# loss = best_model.evaluate(test_data, test_data)
+# print("Test Loss:", loss)
