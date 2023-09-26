@@ -12,6 +12,7 @@ from tensorflow.keras.layers import Dense
 from kerastuner.tuners import RandomSearch
 from tensorflow.keras.models import Sequential
 from scikeras.wrappers import KerasRegressor
+from sklearn.metrics import mean_squared_error
 
 
 import pyedflib
@@ -87,11 +88,17 @@ def fit_and_print_params(estimator, param_grid, scoring, cv):
             print("Evaluating parameter combination ",  params)
             grid_search = GridSearchCV(estimator=estimator, param_grid=params, scoring=scoring, cv=cv)
             grid_search.fit(train_data, train_data)
-            loss = grid_search.evaluate(test_data, test_data)
-            if (loss<best_loss): 
-                best_loss=loss
+            best_model = grid_search.best_estimator_
+
+            # Make predictions on the test data
+            test_predictions = best_model.predict(test_data)
+
+            # Calculate the evaluation metric (e.g., mean squared error in this case)
+            mse = mean_squared_error(test_data, test_predictions)
+            if (mse<best_loss): 
+                best_loss=mse
                 best_params= params
-                text_to_append = 'Best loss: '+ str(loss)+ ' With params: '+str(params) 
+                text_to_append = 'Best loss: '+ str(mse)+ ' With params: '+str(params) 
                 with open("26_Sept.txt", "a") as file:
                     # Append the text to the file
                     file.write(text_to_append + "\n")
