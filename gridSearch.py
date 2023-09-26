@@ -45,7 +45,7 @@ def create_autoencoder(hp):
 tuner = RandomSearch(
     create_autoencoder,
     objective='val_loss',
-    max_trials=5,  # Number of trials (adjust as needed)
+    max_trials=100,  # Number of trials (adjust as needed)
     executions_per_trial=1,  # Number of runs per trial
     directory='my_dir'  # Directory to store results
 )
