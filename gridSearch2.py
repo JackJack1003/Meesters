@@ -13,18 +13,25 @@ from kerastuner.tuners import RandomSearch
 from tensorflow.keras.models import Sequential
 from scikeras.wrappers import KerasRegressor
 from sklearn.metrics import mean_squared_error
+import pickle
 
 
 import pyedflib
 print('Starting')
 
-# best_loss=0
-# best_params= {   'batch_size': [8,16,32, 64, 128],
-#     'epochs': [20, 30, 40]}
-# text_to_append = 'Best loss: '+ str(best_loss)+ ' With params: '+str(best_params) 
-# with open("26_Sept.txt", "a") as file:
-#     # Append the text to the file
-#     file.write(text_to_append + "\n")
+# with open("best_model_weights_and_params.pkl", "wb") as file:
+#     saved_info = {
+#         "model_weights": [[1,2,3], [4,5,6]],
+#         "hyperparameters": {"batch_size": [8,16], "epochs": [20,30]},
+#     }
+#     pickle.dump(saved_info, file)
+
+# with open("best_model_weights_and_params.pkl", "rb") as file:
+#     saved_info = pickle.load(file)
+#     best_weights = saved_info["model_weights"]
+#     print(best_weights)
+#     best_hyperparameters = saved_info["hyperparameters"]
+#     print(best_hyperparameters)
 data_files = ['chb01_01.edf', 'chb01_02.edf', 'chb01_03.edf', 'chb01_04.edf', 'chb01_05.edf','chb01_06.edf','chb01_07.edf','chb01_08.edf','chb01_09.edf','chb01_10.edf']
 data = []
 
@@ -102,6 +109,12 @@ def fit_and_print_params(estimator, param_grid, scoring, cv):
                 with open("26_Sept.txt", "a") as file:
                     # Append the text to the file
                     file.write(text_to_append + "\n")
+                with open("best_model_weights_and_params.pkl", "wb") as file:
+                    saved_info = {
+                        "model_weights": best_model.get_weights(),
+                        "hyperparameters": params,
+                    }
+                    pickle.dump(saved_info, file)
         
 
 fit_and_print_params(estimator=autoencoder, param_grid=param_grid, scoring='neg_mean_squared_error', cv=3)
@@ -115,3 +128,30 @@ fit_and_print_params(estimator=autoencoder, param_grid=param_grid, scoring='neg_
 # Evaluate the best model
 # loss = best_model.evaluate(test_data, test_data)
 # print("Test Loss:", loss)
+
+
+
+###############################
+#Saved model code#
+# def create_autoencoder(optimizer='adam', units_input=64, units_hidden=10, units_output=64, weights=None):
+#     model = Sequential()
+#     model.add(Dense(units=units_input, activation='relu', input_dim=train_data.shape[1]))
+#     model.add(Dense(units=units_hidden, activation='relu'))
+#     model.add(Dense(units=units_output, activation='relu'))
+#     model.add(Dense(train_data.shape[1], activation='sigmoid'))
+
+#     if weights is not None:
+#         model.set_weights(weights)
+    
+#     model.compile(loss='mse', optimizer=optimizer)
+#     return model
+
+# with open("best_model_weights_and_params.pkl", "rb") as file:
+#     saved_info = pickle.load(file)
+#     best_weights = saved_info["model_weights"]
+#     best_hyperparameters = saved_info["hyperparameters"]
+
+# # Create the model with the saved weights and hyperparameters
+# loaded_model = create_autoencoder(weights=best_weights, **best_hyperparameters)
+
+
