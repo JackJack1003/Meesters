@@ -99,6 +99,7 @@ def fit_and_print_params(estimator, param_grid, scoring, cv):
 
             # Make predictions on the test data
             test_predictions = best_model.predict(test_data)
+            best_model = best_model.model
 
             # Calculate the evaluation metric (e.g., mean squared error in this case)
             mse = mean_squared_error(test_data, test_predictions)
