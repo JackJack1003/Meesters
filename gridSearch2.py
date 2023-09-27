@@ -95,28 +95,34 @@ def fit_and_print_params(estimator, param_grid, scoring, cv):
             print("Evaluating parameter combination ",  params)
             grid_search = GridSearchCV(estimator=estimator, param_grid=params, scoring=scoring, cv=cv)
             grid_search.fit(train_data, train_data)
-            best_model = grid_search.best_estimator_
+            best_keras_model = grid_search.best_estimator_  # Access the underlying Keras model
 
             # Make predictions on the test data
-            test_predictions = best_model.predict(test_data)
-            best_model = best_model.model
+            test_predictions = best_keras_model.predict(test_data)
 
             # Calculate the evaluation metric (e.g., mean squared error in this case)
             mse = mean_squared_error(test_data, test_predictions)
-            if (mse<best_loss): 
-                best_loss=mse
-                best_params= params
-                text_to_append = 'Best loss: '+ str(mse)+ ' With params: '+str(params) 
+
+            # Check if the current model has a better loss than the previous best
+            if mse < best_loss:
+                best_loss = mse
+                best_params = params
+
+                # Append the information to the log file
+                text_to_append = 'Best loss: ' + str(mse) + ' With params: ' + str(params)
                 with open("26_Sept.txt", "a") as file:
-                    # Append the text to the file
                     file.write(text_to_append + "\n")
+
+                # Save the best model's weights and hyperparameters
                 with open("best_model_weights_and_params.pkl", "wb") as file:
                     saved_info = {
-                        "model_weights": best_model.get_weights(),
+                        "model_weights": best_keras_model.layers[0].get_weights()[0],
                         "hyperparameters": params,
                     }
                     pickle.dump(saved_info, file)
-        
+
+  
+
 
 fit_and_print_params(estimator=autoencoder, param_grid=param_grid, scoring='neg_mean_squared_error', cv=3)
 # Print the best hyperparameters
