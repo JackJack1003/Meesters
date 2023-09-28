@@ -99,7 +99,7 @@ def fit_and_print_params(estimator, param_grid, scoring, cv):
 
             # Make predictions on the test data
             test_predictions = best_keras_model.predict(test_data)
-
+            my_model = best_keras_model.model
             # Calculate the evaluation metric (e.g., mean squared error in this case)
             mse = mean_squared_error(test_data, test_predictions)
 
@@ -116,7 +116,7 @@ def fit_and_print_params(estimator, param_grid, scoring, cv):
                 # Save the best model's weights and hyperparameters
                 with open("best_model_weights_and_params.pkl", "wb") as file:
                     saved_info = {
-                        "model_weights": best_keras_model.layers[0].get_weights()[0],
+                        "model_weights": my_model.layers[0].get_weights()[0],
                         "hyperparameters": params,
                     }
                     pickle.dump(saved_info, file)
