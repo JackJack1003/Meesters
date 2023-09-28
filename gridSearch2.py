@@ -66,7 +66,9 @@ def fit_and_print_params(estimator, param_grid, scoring, cv):
             best_keras_model = grid_search.best_estimator_  # Access the underlying Keras model
 
             # Extract the Keras model from the KerasRegressor object
-            my_model = best_keras_model.build_fn(**best_keras_model.best_params_)
+          
+            my_model = best_keras_model.build_fn(**best_keras_model.get_params())
+
 
             # Check if the current model has a better loss than the previous best
             test_predictions = my_model.predict(test_data)
