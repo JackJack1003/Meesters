@@ -116,7 +116,7 @@ def fit_and_print_params(estimator, param_grid, scoring, cv):
                 # Save the best model's weights and hyperparameters
                 with open("best_model_weights_and_params.pkl", "wb") as file:
                     saved_info = {
-                        "model_weights": my_model.layers[0].get_weights()[0],
+                        "model_weights": my_model.layers[0].get_weights(),
                         "hyperparameters": params,
                     }
                     pickle.dump(saved_info, file)
