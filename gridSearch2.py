@@ -32,7 +32,7 @@ data = np.array(data)
 data = data / 255.0
 train_data, test_data = data[:200], data[200:]
 
-def create_autoencoder(optimizer='adam', units_input=64, units_hidden=10, units_output=64):
+def create_autoencoder(optimizer='adam', units_input=64, units_hidden=10, units_output=64, **kwargs):
     model = Sequential()
     model.add(Dense(units=units_input, activation='relu', input_dim=train_data.shape[1]))
     model.add(Dense(units=units_hidden, activation='relu'))
@@ -71,7 +71,7 @@ def fit_and_print_params(estimator, param_grid, scoring, cv):
 
 
             # Check if the current model has a better loss than the previous best
-            test_predictions = my_model.predict(test_data)
+            test_predictions = best_keras_model.predict(test_data)
             mse = mean_squared_error(test_data, test_predictions)
 
             # Check if the current model has a better loss than the previous best
