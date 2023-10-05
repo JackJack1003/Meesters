@@ -20,7 +20,6 @@ for d in data_files:
     edf_file.close()
     print('Done reading', d)
 
-
 data = np.array(data)
 
 # Normalize the data to values between 0 and 1
@@ -47,15 +46,21 @@ def build_autoencoder(input_shape, input_output_size, latent_space):
 
     return model
 
-
 # Build the autoencoder model with the input shape (921600,)
 def run_combo(epochs, batches, in_out_layer, latent_space):
-
-    autoencoder_model = build_autoencoder(train_data.shape[1:],in_out_layer, latent_space)
+    autoencoder_model = build_autoencoder(train_data.shape[1:], in_out_layer, latent_space)
     autoencoder_model.summary()
 
+    # Store hyperparameters in a dictionary
+    hyperparameters = {
+        "epochs": epochs,
+        "batch_size": batches,
+        "input_output_size": in_out_layer,
+        "latent_space": latent_space,
+    }
+
     history = autoencoder_model.fit(
-        train_data, train_data,  # Input and target are the same for an autoencoder
+        train_data, train_data,
         epochs=epochs,
         batch_size=batches,
         shuffle=True,
@@ -63,32 +68,27 @@ def run_combo(epochs, batches, in_out_layer, latent_space):
     )
 
     loss = autoencoder_model.evaluate(test_data, test_data, batch_size=batches)
-    print('Die ')
-    return loss, history, autoencoder_model
 
+    return loss, history, autoencoder_model, hyperparameters
 
 all_epochs = [10,20,30]
-all_batches= [10,20,30,40]
+all_batches = [10,20,30,40]
 all_in_out = [128,256]
 all_latent = [32,64]
 
-for e in all_epochs: 
-    for b in all_batches: 
-        for i in all_in_out: 
-            for l in all_latent: 
-                loss, summary, model = run_combo(e,b,i,l)
-                text_to_append = 'Best loss: ' + str(loss) + ' With params: ' + str(summary)
-                with open("26_Sept.txt", "a") as file:
+for e in all_epochs:
+    for b in all_batches:
+        for i in all_in_out:
+            for l in all_latent:
+                loss, summary, model, hyperparameters = run_combo(e, b, i, l)
+                text_to_append = 'Best loss: ' + str(loss) + ' With params: ' + str(hyperparameters)
+                with open("05_Oct.txt", "a") as file:
                     file.write(text_to_append + "\n")
                 with open("auto.pkl", "wb") as file:
                     saved_info = {
                         "model_weights": model.get_weights(),
-                        "hyperparameters": summary,
-                        }
+                        "hyperparameters": hyperparameters,
+                    }
                     pickle.dump(saved_info, file)
                     print('EEEEEEENN CYCLE KLAAR')
                     print('----------------------------------------------------------------')
-
-
-
-
