@@ -75,11 +75,12 @@ all_epochs = [10,20,30]
 all_batches = [10,20,30,40]
 all_in_out = [128,256]
 all_latent = [32,64]
-
+count = 0
 for e in all_epochs:
     for b in all_batches:
         for i in all_in_out:
             for l in all_latent:
+                count +=1
                 loss, summary, model, hyperparameters = run_combo(e, b, i, l)
                 text_to_append = 'Best loss: ' + str(loss) + ' With params: ' + str(hyperparameters)
                 with open("05_Oct.txt", "a") as file:
@@ -90,5 +91,5 @@ for e in all_epochs:
                         "hyperparameters": hyperparameters,
                     }
                     pickle.dump(saved_info, file)
-                    print('EEEEEEENN CYCLE KLAAR')
+                    print('CYCLE KLAAR: ', count, '/48')
                     print('----------------------------------------------------------------')
