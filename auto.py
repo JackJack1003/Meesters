@@ -42,7 +42,7 @@ def getFile(_start):
         if not os.path.exists(file): 
             Path(file).touch()
             return file
-        elif os.path.getsize(file)/(1024*1024)>90: 
+        elif os.path.getsize(file)/(1024*1024)>9: 
             file = getFile(i+1)
             return file
         else:
@@ -93,7 +93,7 @@ def run_combo(epochs, batches, in_out_layer, latent_space):
     return loss, history, autoencoder_model, hyperparameters
 
 all_epochs = [10,20,30]
-all_batches = [10,20,30,40]
+all_batches = [20,30,40]
 all_in_out = [128,256]
 all_latent = [32,64]
 count = 0
