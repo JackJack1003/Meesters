@@ -6,6 +6,7 @@ import pickle
 import os
 import pyedflib
 from pathlib import Path
+import gzip
 print('Starting')
 
 
@@ -101,7 +102,7 @@ for e in all_epochs:
                 with open("05_Oct.txt", "a") as file:
                     file.write(text_to_append + "\n")
                 file = getFile(0)
-                with open(file, "wb") as file:
+                with gzip.open(file, "wb") as file:
                     saved_info = {
                         "model_weights": model.get_weights(),
                         "hyperparameters": hyperparameters,
