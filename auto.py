@@ -42,7 +42,7 @@ def getFile(_start):
         if not os.path.exists(file): 
             Path(file).touch()
             return file
-        elif os.path.getsize(file)/(1024*1024)>900: 
+        elif os.path.getsize(file)/(1024*1024)>90: 
             file = getFile(i+1)
             return file
         else:
