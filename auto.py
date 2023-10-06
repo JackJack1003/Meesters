@@ -3,9 +3,17 @@ import tensorflow as tf
 from tensorflow.keras import layers, models
 import matplotlib.pyplot as plt
 import pickle
-
+import os
 import pyedflib
+from pathlib import Path
 print('Starting')
+file_count = 0
+current_file = "auto_"+str(file_count)+".pkl"
+if (os.path.getsize(current_file))>1: 
+    file_count +=1
+    new_file = "auto_"+str(file_count)+".pkl"
+    Path.touch(new_file)
+
 
 data_files = ['chb01_01.edf', 'chb01_02.edf', 'chb01_03.edf', 'chb01_04.edf', 'chb01_05.edf','chb01_06.edf','chb01_07.edf','chb01_08.edf','chb01_09.edf','chb01_10.edf']
 data = []
@@ -27,6 +35,19 @@ data = data / 255.0
 
 # Split the data into training and testing sets
 train_data, test_data = data[:200], data[200:]  # You can adjust the split as needed
+
+def getFile(_start): 
+    for i in range(_start,100):
+        file = "auto_"+str(i)+".pkl"
+        if not os.path.exists(file): 
+            Path(file).touch()
+            return file
+        elif os.path.getsize(file)/(1024*1024)>900: 
+            file = getFile(i+1)
+            return file
+        else:
+            return file
+
 
 # Step 4: Build the autoencoder model
 def build_autoencoder(input_shape, input_output_size, latent_space):
@@ -85,7 +106,8 @@ for e in all_epochs:
                 text_to_append = 'Best loss: ' + str(loss) + ' With params: ' + str(hyperparameters)
                 with open("05_Oct.txt", "a") as file:
                     file.write(text_to_append + "\n")
-                with open("auto.pkl", "wb") as file:
+                file = getFile(0)
+                with open(file, "wb") as file:
                     saved_info = {
                         "model_weights": model.get_weights(),
                         "hyperparameters": hyperparameters,
