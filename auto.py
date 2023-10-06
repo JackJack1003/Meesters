@@ -7,12 +7,6 @@ import os
 import pyedflib
 from pathlib import Path
 print('Starting')
-file_count = 0
-current_file = "auto_"+str(file_count)+".pkl"
-if (os.path.getsize(current_file))>1: 
-    file_count +=1
-    new_file = "auto_"+str(file_count)+".pkl"
-    Path.touch(new_file)
 
 
 data_files = ['chb01_01.edf', 'chb01_02.edf', 'chb01_03.edf', 'chb01_04.edf', 'chb01_05.edf','chb01_06.edf','chb01_07.edf','chb01_08.edf','chb01_09.edf','chb01_10.edf']
