@@ -93,9 +93,9 @@ single_file = str(file_path)+'_single.txt'
 if not os.path.exists(single_file): 
     Path(single_file).touch()
 with open(single_file, "w") as file:
-    file.write(str(test_data[:5]))
-    file.write('\n')
-    file.write(str(reconstructed_data[:5]))
+    np.savetxt(file, test_data[:5], fmt="%f", delimiter=", ")
+    file.write("\n")
+    np.savetxt(file, reconstructed_data[:5], fmt="%f", delimiter=", ")
 
 
 # num_examples = 5
