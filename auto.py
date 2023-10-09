@@ -9,7 +9,14 @@ from pathlib import Path
 print('Starting')
 
 
-data_files = ['chb01_01.edf', 'chb01_02.edf', 'chb01_03.edf', 'chb01_04.edf', 'chb01_05.edf','chb01_06.edf','chb01_07.edf','chb01_08.edf','chb01_09.edf','chb01_10.edf']
+data_files = ['chb01_01.edf', 'chb01_02.edf', 'chb01_03.edf', 'chb01_04.edf', 'chb01_05.edf','chb01_06.edf',
+              'chb01_07.edf','chb01_08.edf',
+              'chb01_09.edf','chb01_10.edf', 
+              'chb02_01.edf', 'chb02_02.edf', 'chb02_03.edf', 'chb02_04.edf', 'chb02_05.edf', 
+              'chb02_06.edf',
+            'chb02_07.edf', 'chb02_08.edf', 'chb02_09.edf', 'chb02_10.edf', 'chb02_11.edf', 
+            'chb02_12.edf', 'chb02_13.edf', 'chb02_14.edf', 'chb02_15.edf'
+]
 data = []
 
 for d in data_files:
@@ -28,7 +35,7 @@ data = np.array(data)
 data = data / 255.0
 
 # Split the data into training and testing sets
-train_data, test_data = data[:200], data[200:]  # You can adjust the split as needed
+train_data, test_data = data[:460], data[460:]  # You can adjust the split as needed
 
 def getFile(_start): 
     for i in range(_start,100):
