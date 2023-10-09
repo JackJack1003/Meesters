@@ -93,21 +93,21 @@ single_file = str(file_path)+'_single.txt'
 if not os.path.exists(single_file): 
     Path(single_file).touch()
 with open(single_file, "w") as file:
-    file.write(reconstructed_data + "\n")
+    file.write(reconstructed_data)
 
 
-num_examples = 5
-plt.figure(figsize=(12, 6))
-for i in range(num_examples):
-    # Original data
-    plt.subplot(2, num_examples, i + 1)
-    plt.plot(test_data[i])
-    plt.title(f"Original {i + 1}")
+# num_examples = 5
+# plt.figure(figsize=(12, 6))
+# for i in range(num_examples):
+#     # Original data
+#     plt.subplot(2, num_examples, i + 1)
+#     plt.plot(test_data[i])
+#     plt.title(f"Original {i + 1}")
 
-    # Reconstructed data
-    plt.subplot(2, num_examples, i + num_examples + 1)
-    plt.plot(reconstructed_data[i])
-    plt.title(f"Reconstructed {i + 1}")
+#     # Reconstructed data
+#     plt.subplot(2, num_examples, i + num_examples + 1)
+#     plt.plot(reconstructed_data[i])
+#     plt.title(f"Reconstructed {i + 1}")
 
-plt.tight_layout()
-plt.show()
+# plt.tight_layout()
+# plt.show()
