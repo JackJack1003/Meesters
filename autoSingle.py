@@ -93,7 +93,7 @@ single_file = str(file_path)+'_single.txt'
 if not os.path.exists(single_file): 
     Path(single_file).touch()
 with open(single_file, "w") as file:
-    file.write(reconstructed_data.to_string())
+    file.write(reconstructed_data.tostring())
 
 
 # num_examples = 5
