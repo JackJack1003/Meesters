@@ -6,8 +6,6 @@ import pickle
 import os
 import pyedflib
 from pathlib import Path
-import gzip
-import tensorflow_model_optimization as tfmot
 print('Starting')
 
 
@@ -84,30 +82,9 @@ def run_combo(epochs, batches, in_out_layer, latent_space):
         validation_data=(test_data, test_data)
     )
 
-    # Quantize the model weights
-    quantize_model = tf.keras.models.clone_model(autoencoder_model)
-    quantize_model.set_weights(autoencoder_model.get_weights())
-    quantize_model.compile(optimizer='adam', loss='mse')
-    quantize_model = tfmot.quantization.keras.quantize_model(quantize_model)
+    loss = autoencoder_model.evaluate(test_data, test_data, batch_size=batches)
 
-    # Define a pruning schedule (you can adjust the parameters as needed)
-    pruning_params = {
-        'pruning_schedule': tfmot.sparsity.keras.PolynomialDecay(
-            initial_sparsity=0.50,  # Initial sparsity (can be adjusted)
-            final_sparsity=0.90,    # Final sparsity (can be adjusted)
-            begin_step=0,
-            end_step=len(train_data) // batches * epochs,  # Adjust based on your training steps
-            frequency=100
-        )
-    }
-
-    # Apply pruning to the quantized model
-    pruned_quantized_model = tfmot.sparsity.keras.prune_low_magnitude(quantize_model, **pruning_params)
-
-    loss = pruned_quantized_model.evaluate(test_data, test_data, batch_size=batches)
-
-    return loss, history, pruned_quantized_model, hyperparameters
-
+    return loss, history, autoencoder_model, hyperparameters
 
 all_epochs = [10,20,30]
 all_batches = [20,30,40]
@@ -124,7 +101,7 @@ for e in all_epochs:
                 with open("09_Oct.txt", "a") as file:
                     file.write(text_to_append + "\n")
                 file = getFile(0)
-                with gzip.open(file, "wb") as file:
+                with open(file, "wb") as file:
                     saved_info = {
                         "model_weights": model.get_weights(),
                         "hyperparameters": hyperparameters,

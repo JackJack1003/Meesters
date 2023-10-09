@@ -3,3 +3,6 @@ Best loss: 0.05030286849877235 With params: {'batch_size': [8, 16], 'epochs': [2
 Best loss: 0.05358262234836307 With params: {'batch_size': [8, 16], 'epochs': [20, 30]}
 Best loss: 0.04446949771024981 With params: {'batch_size': [16, 32], 'epochs': [20, 30]}
 Best loss: 0.048839646033923705 With params: {'batch_size': [8, 16], 'epochs': [20, 30]}
+Best loss: 0.03481106087565422 With params: None
+Best loss: 0.039046723395586014 With params: <keras.src.callbacks.History object at 0x00000226ABDBDD50>
+Best loss: 0.03291900083422661 With params: <keras.src.callbacks.History object at 0x000001DD502E5CD0>

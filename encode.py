@@ -23,19 +23,8 @@ for channel_label in channel_labels:
 
 edf_file.close()
 print("file gelees"); 
-#data het 23 arrays in dit, vir 23 channels
-#data[0] het 256 meetings per sekonde vir een uur in. So elke 256 meetings = 1 sekonde
 
 
-# Step 1: Install the required libraries
-
-
-# Step 2: Import the necessary libraries
-
-
-# Assuming 'data' is the array containing your 23 one-dimensional arrays with 921600 entries each
-
-# Step 3: Prepare the data
 data = np.array(data)
 
 # Normalize the data to values between 0 and 1
