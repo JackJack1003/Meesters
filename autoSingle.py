@@ -86,9 +86,17 @@ new_autoencoder_model.set_weights(model_weights)
 loss = new_autoencoder_model.evaluate(test_data, test_data, batch_size=10)
 print('loss is ', loss)
 
+
 reconstructed_data = new_autoencoder_model.predict(test_data)
+
+single_file = str(file_path)+'_single.txt'
+if not os.path.exists(single_file): 
+    Path(single_file).touch()
+with open(single_file, "w") as file:
+    file.write(reconstructed_data + "\n")
+
+
 num_examples = 5
-# Plot the original and reconstructed data
 plt.figure(figsize=(12, 6))
 for i in range(num_examples):
     # Original data
