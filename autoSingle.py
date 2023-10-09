@@ -95,6 +95,10 @@ if not os.path.exists(single_file):
 with open(single_file, "w") as file:
     np.savetxt(file, test_data[:5], fmt="%f", delimiter=", ")
     file.write("\n")
+    file.write("\n")
+    file.write("\n")
+    file.write("\n")
+    file.write("\n")
     np.savetxt(file, reconstructed_data[:5], fmt="%f", delimiter=", ")
 
 
