@@ -94,6 +94,7 @@ if not os.path.exists(single_file):
     Path(single_file).touch()
 with open(single_file, "w") as file:
     for i in range(0,5): 
+        file.write('---') 
         np.savetxt(file, test_data[i], fmt="%f", delimiter=", ")
     for i in range(0,5):  
         file.write('---')   
