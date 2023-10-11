@@ -114,6 +114,6 @@ for e in all_epochs:
                     pickle.dump(saved_info, file)
                     print('CYCLE KLAAR: ', count, '/48')
                     print('----------------------------------------------------------------')
-                text_to_append = 'Best loss: ' + str(loss) + ' With params: ' + str(hyperparameters) + ' AND file :' +file+'\n'
+                text_to_append = 'Best loss: ' + str(loss) + ' With params: ' + str(hyperparameters) + ' AND file :' +str(file)+'\n'
                 with open("09_Oct.txt", "a") as file:
                     file.write(text_to_append + "\n")
