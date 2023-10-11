@@ -52,7 +52,7 @@ def build_autoencoder(input_shape, input_output_size, latent_space):
 
     # Decoder
     x = layers.Dense(input_output_size, activation='elu')(x)
-    output_layer = layers.Dense(input_shape[0], activation='elu')(x)
+    output_layer = layers.Dense(input_shape[0], activation='sigmoid')(x)
 
     model = models.Model(input_layer, output_layer)
     model.compile(optimizer='nadam', loss='mean_squared_error')
