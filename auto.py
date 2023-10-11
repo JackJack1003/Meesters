@@ -56,12 +56,12 @@ def build_autoencoder(input_shape, input_output_size, latent_space):
     print(np.shape(input_layer))
 
     # Encoder
-    x = layers.Dense(input_output_size, activation='relu')(input_layer)
-    x = layers.Dense(latent_space, activation='relu')(x)
+    x = layers.Dense(input_output_size, activation='sigmoid')(input_layer)
+    x = layers.Dense(latent_space, activation='sigmoid')(x)
 
     # Decoder
-    x = layers.Dense(input_output_size, activation='relu')(x)
-    output_layer = layers.Dense(input_shape[0], activation='sigmoid')(x)
+    x = layers.Dense(input_output_size, activation='sigmoid')(x)
+    output_layer = layers.Dense(input_shape[0], activation='relu')(x)
 
     model = models.Model(input_layer, output_layer)
     model.compile(optimizer='nadam', loss='mean_squared_error')
