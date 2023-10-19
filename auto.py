@@ -63,18 +63,18 @@ def add_layers(in_out, original_in_out, latent, reverse, x, input_layer):
         if (in_out<original_in_out): 
             in_out += step
             in_out = round(in_out,2)
-            add_layers(in_out, original_in_out, latent,new_x, reverse, input_layer)
+            add_layers(in_out, original_in_out, latent, reverse, new_x input_layer)
         else: 
             return x
     else: 
         if (in_out>latent): 
             in_out -=step
             in_out = round(in_out,2)
-            add_layers(in_out, original_in_out, latent, new_x, reverse, input_layer)
+            add_layers(in_out, original_in_out, latent, reverse, new_x,  input_layer)
         else: 
             reverse = True
             in_out += step
-            add_layers(in_out, original_in_out, latent, new_x,reverse, input_layer)
+            add_layers(in_out, original_in_out, latent, reverse, new_x, input_layer)
 
 
 
