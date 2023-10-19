@@ -52,18 +52,46 @@ def getFile(_start):
             return file
 
 
+def add_layers(in_out, original_in_out, latent, reverse, x, input_layer): 
+    print(in_out)
+    if (x == 0): 
+        new_x =  layers.Dense(in_out, activation='linear')(input_layer)
+    else: 
+        new_x = layers.Dense(in_out, activation='linear')(x)
+    step = (original_in_out-latent)/10
+    if (reverse):
+        if (in_out<original_in_out): 
+            in_out += step
+            in_out = round(in_out,2)
+            add_layers(in_out, original_in_out, latent,new_x, reverse, input_layer)
+        else: 
+            return x
+    else: 
+        if (in_out>latent): 
+            in_out -=step
+            in_out = round(in_out,2)
+            add_layers(in_out, original_in_out, latent, new_x, reverse, input_layer)
+        else: 
+            reverse = True
+            in_out += step
+            add_layers(in_out, original_in_out, latent, new_x,reverse, input_layer)
+
+
+
 # Step 4: Build the autoencoder model
 def build_autoencoder(input_shape, input_output_size, latent_space):
     input_layer = layers.Input(shape=input_shape)
     print(np.shape(input_layer))
 
-    # Encoder
-    x = layers.Dense(input_output_size, activation='elu')(input_layer)
-    x = layers.Dense(latent_space, activation='elu')(x)
+    # # Encoder
+  
+    # x = layers.Dense(input_output_size, activation='elu')(input_layer)
+    # x = layers.Dense(latent_space, activation='elu')(x)
 
-    # Decoder
-    x = layers.Dense(input_output_size, activation='elu')(x)
-    output_layer = layers.Dense(input_shape[0], activation='relu')(x)
+    # # Decoder
+    # x = layers.Dense(input_output_size, activation='elu')(x)
+    x = add_layers(input_output_size, input_output_size, latent_space,False,0,input_shape )
+    output_layer = layers.Dense(input_shape[0], activation='linear')(x)
 
     model = models.Model(input_layer, output_layer)
     model.compile(optimizer='nadam', loss='mean_squared_error')
