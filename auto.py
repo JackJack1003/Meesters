@@ -37,7 +37,8 @@ data = data / 255.0
 
 
 train_data, test_data = data[:460], data[460:]  
-
+# print(train_data.shape[1:][0])
+# sys.exit()
 def getFile(_start): 
     for i in range(_start,100):
         file = "auto_"+str(i)+".pkl"
@@ -96,8 +97,8 @@ def run_combo(epochs, batches, in_out_layer, latent_space):
 
 all_epochs = [10,20,30]
 all_batches = [20,30,40]
-all_in_out = [len(train_data)/2,256]
-all_latent = [len(train_data)/4,64]
+all_in_out = [len(train_data.shape[1:][0])/2,256]
+all_latent = [len(train_data.shape[1:][0])/4,64]
 count = 0
 for e in all_epochs:
     for b in all_batches:
