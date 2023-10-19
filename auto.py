@@ -6,6 +6,7 @@ import pickle
 import os
 import pyedflib
 from pathlib import Path
+import sys
 print('Starting')
 
 
@@ -31,11 +32,11 @@ for d in data_files:
 
 data = np.array(data)
 
-# Normalize the data to values between 0 and 1
+
 data = data / 255.0
 
-# Split the data into training and testing sets
-train_data, test_data = data[:460], data[460:]  # You can adjust the split as needed
+
+train_data, test_data = data[:460], data[460:]  
 
 def getFile(_start): 
     for i in range(_start,100):
@@ -95,8 +96,8 @@ def run_combo(epochs, batches, in_out_layer, latent_space):
 
 all_epochs = [10,20,30]
 all_batches = [20,30,40]
-all_in_out = [train_data.shape[1:]/2,256]
-all_latent = [train_data.shape[1:]/4,64]
+all_in_out = [len(train_data)/2,256]
+all_latent = [len(train_data)/4,64]
 count = 0
 for e in all_epochs:
     for b in all_batches:
