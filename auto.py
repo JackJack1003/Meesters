@@ -63,7 +63,7 @@ def add_layers(in_out, original_in_out, latent, reverse, x, input_layer):
         if (in_out<original_in_out): 
             in_out += step
             in_out = round(in_out,2)
-            add_layers(in_out, original_in_out, latent, reverse, new_x input_layer)
+            add_layers(in_out, original_in_out, latent, reverse, new_x, input_layer)
         else: 
             return x
     else: 
