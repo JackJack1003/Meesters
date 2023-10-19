@@ -95,8 +95,8 @@ def run_combo(epochs, batches, in_out_layer, latent_space):
 
 all_epochs = [10,20,30]
 all_batches = [20,30,40]
-all_in_out = [128,256]
-all_latent = [32,64]
+all_in_out = [train_data.shape[1:]/2,256]
+all_latent = [train_data.shape[1:]/4,64]
 count = 0
 for e in all_epochs:
     for b in all_batches:
