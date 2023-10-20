@@ -98,7 +98,7 @@ def build_autoencoder(input_shape, input_output_size, latent_space):
     latent_layer = layers.Dense(round(latent_space), activation='linear')(layer_2)
     layer_3 = layers.Dense(round(input_output_size/1.5), activation='linear')(latent_layer)
     # output_layer = layers.Dense(input_output_size, activation='elu')(layer_3)
-    output_layer = layers.Dense(input_output_size, activation='linear')(layer_3)
+    output_layer = layers.Dense(input_shape[0], activation='linear')(layer_3)
 
     model = models.Model(input_layer, output_layer)
     model.compile(optimizer='nadam', loss='mean_squared_error')
