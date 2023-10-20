@@ -93,7 +93,7 @@ def build_autoencoder(input_shape, input_output_size, latent_space):
     # x = layers.Dense(input_output_size, activation='elu')(x)
     #x = add_layers(input_output_size, input_output_size, latent_space,False,0, input_layer )
     # output_layer = add_layers(input_output_size, input_output_size, latent_space,False,0, input_layer )
-    layer_1 = layers.Dense(input_output_size, activation='linear')(input_layer)
+    layer_1 = layers.Dense(input_output_size, activation='linear')(input_shape[0])
     layer_2 = layers.Dense(round(input_output_size/1.5), activation='linear')(layer_1)
     latent_layer = layers.Dense(round(latent_space), activation='linear')(layer_2)
     layer_3 = layers.Dense(round(input_output_size/1.5), activation='linear')(latent_layer)
