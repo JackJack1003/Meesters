@@ -90,7 +90,7 @@ def build_autoencoder(input_shape, input_output_size, latent_space):
 
     # # Decoder
     # x = layers.Dense(input_output_size, activation='elu')(x)
-    x = add_layers(input_output_size, input_output_size, latent_space,False,0,input_shape )
+    x = add_layers(input_output_size, input_output_size, latent_space,False,0, input_layer )
     output_layer = layers.Dense(input_shape[0], activation='linear')(x)
 
     model = models.Model(input_layer, output_layer)
