@@ -93,12 +93,12 @@ def build_autoencoder(input_shape, input_output_size, latent_space):
     # x = layers.Dense(input_output_size, activation='elu')(x)
     #x = add_layers(input_output_size, input_output_size, latent_space,False,0, input_layer )
     # output_layer = add_layers(input_output_size, input_output_size, latent_space,False,0, input_layer )
-    layer_1 = layers.Dense(input_output_size, activation='elu')(input_layer)
-    layer_2 = layers.Dense(round(input_output_size/1.5), activation='elu')(layer_1)
-    latent_layer = layers.Dense(round(latent_space), activation='elu')(layer_2)
-    layer_3 = layers.Dense(round(input_output_size/1.5), activation='elu')(latent_layer)
+    layer_1 = layers.Dense(input_output_size, activation='linear')(input_layer)
+    layer_2 = layers.Dense(round(input_output_size/1.5), activation='linear')(layer_1)
+    latent_layer = layers.Dense(round(latent_space), activation='linear')(layer_2)
+    layer_3 = layers.Dense(round(input_output_size/1.5), activation='linear')(latent_layer)
     # output_layer = layers.Dense(input_output_size, activation='elu')(layer_3)
-    output_layer = layers.Dense(input_shape[0], activation='relu')(layer_3)
+    output_layer = layers.Dense(input_shape[0], activation='linear')(layer_3)
 
     model = models.Model(input_layer, output_layer)
     model.compile(optimizer='nadam', loss='mean_squared_error')
@@ -131,7 +131,7 @@ def run_combo(epochs, batches, in_out_layer, latent_space):
     return loss, history, autoencoder_model, hyperparameters
 
 all_epochs = [10,20,30]
-all_batches = [20,30,40]
+all_batches = [40,30,20]
 all_in_out = [train_data.shape[1:][0]/2000,256]
 all_latent = [train_data.shape[1:][0]/4000,64]
 count = 0
