@@ -54,7 +54,7 @@ def getFile(_start):
 
 def add_layers(in_out, original_in_out, latent, reverse, x, input_layer): 
     print(in_out)
-    if (x == 0): 
+    if x == 0: 
         new_x =  layers.Dense(in_out, activation='linear')(input_layer)
     else: 
         new_x = layers.Dense(in_out, activation='linear')(x)
@@ -90,8 +90,8 @@ def build_autoencoder(input_shape, input_output_size, latent_space):
 
     # # Decoder
     # x = layers.Dense(input_output_size, activation='elu')(x)
-    x = add_layers(input_output_size, input_output_size, latent_space,False,0, input_layer )
-    output_layer = layers.Dense(input_shape[0], activation='linear')(x)
+    #x = add_layers(input_output_size, input_output_size, latent_space,False,0, input_layer )
+    output_layer = add_layers(input_output_size, input_output_size, latent_space,False,0, input_layer )
 
     model = models.Model(input_layer, output_layer)
     model.compile(optimizer='nadam', loss='mean_squared_error')
