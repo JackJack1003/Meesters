@@ -55,26 +55,27 @@ def getFile(_start):
 def add_layers(in_out, original_in_out, latent, reverse, x, input_layer): 
     print(in_out)
     if x == 0: 
-        new_x =  layers.Dense(in_out, activation='linear')(input_layer)
+        new_x =  layers.Dense(round(in_out), activation='linear')(input_layer)
     else: 
-        new_x = layers.Dense(in_out, activation='linear')(x)
+        new_x = layers.Dense(round(in_out), activation='linear')(x)
     step = (original_in_out-latent)/10
     if (reverse):
         if (in_out<original_in_out): 
             in_out += step
             in_out = round(in_out,2)
-            add_layers(in_out, original_in_out, latent, reverse, new_x, input_layer)
+            out_x = add_layers(in_out, original_in_out, latent, reverse, new_x, input_layer)
         else: 
             return x
     else: 
         if (in_out>latent): 
             in_out -=step
             in_out = round(in_out,2)
-            add_layers(in_out, original_in_out, latent, reverse, new_x,  input_layer)
+            out_x =add_layers(in_out, original_in_out, latent, reverse, new_x,  input_layer)
         else: 
             reverse = True
             in_out += step
-            add_layers(in_out, original_in_out, latent, reverse, new_x, input_layer)
+            out_x = add_layers(in_out, original_in_out, latent, reverse, new_x, input_layer)
+    return out_x
 
 
 
