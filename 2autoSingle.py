@@ -66,7 +66,7 @@ def build_autoencoder(input_shape, latent_space):
     autoencoder_model = keras.Model(encoder_input, decoder_model(encoder_output), name="autoencoder")
 
     # Compile the autoencoder
-    autoencoder_model.compile(optimizer='adam', loss='mean_squared_error')
+    #autoencoder_model.compile(optimizer='adam', loss='mean_squared_error')
 
     # Train the autoencoder
     #autoencoder_model.fit(train_data, train_data, epochs=50, batch_size=32, validation_data=(test_data, test_data))
