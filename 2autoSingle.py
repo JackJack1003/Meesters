@@ -43,39 +43,12 @@ data = data / 255.0
 train_data, test_data = data[:460], data[460:]  # You can adjust the split as needed
 
 
-def build_autoencoder(input_shape, latent_space):
-    input_layer = layers.Input(input_shape)
-    print(np.shape(input_layer))
 
-    encoder_input = keras.Input(shape=(input_shape,))
-    encoder = layers.Dense(128, activation='relu')(encoder_input)
-    encoder = layers.Dense(64, activation='relu')(encoder)
-    encoder = layers.Dense(32, activation='relu')(encoder)
-    encoder_output = layers.Dense(latent_space, activation='relu')(encoder)
-
-    # Decoder
-    decoder_input = keras.Input(shape=(latent_space,))
-    decoder = layers.Dense(32, activation='relu')(decoder_input)
-    decoder = layers.Dense(64, activation='relu')(decoder)
-    decoder = layers.Dense(128, activation='relu')(decoder)
-    decoder_output = layers.Dense(input_shape, activation='sigmoid')(decoder)
-
-    # Models
-    encoder_model = keras.Model(encoder_input, encoder_output, name="encoder")
-    decoder_model = keras.Model(decoder_input, decoder_output, name="decoder")
-    autoencoder_model = keras.Model(encoder_input, decoder_model(encoder_output), name="autoencoder")
-
-    # Compile the autoencoder
-    #autoencoder_model.compile(optimizer='adam', loss='mean_squared_error')
-
-    # Train the autoencoder
-    #autoencoder_model.fit(train_data, train_data, epochs=50, batch_size=32, validation_data=(test_data, test_data))
-
-    return autoencoder_model
 
 def load_model_and_hyperparameters(file_path):
     with open(file_path, "rb") as file:
         saved_info = pickle.load(file)
+        model_architecture = saved_info["model_architecture"]
         model_weights = saved_info["model_weights"]
         #hyperparameters = saved_info["hyperparameters"]
     return model_weights
@@ -87,11 +60,10 @@ args = parser.parse_args()
 file_path =  args.file  
 # print(file_path)
 
-model_weights = load_model_and_hyperparameters(file_path)
+model_weights, model_architecture = load_model_and_hyperparameters(file_path)
 
-input_dim = train_data.shape[1]
-latent_dim = input_dim // 2
-new_autoencoder_model = build_autoencoder(input_dim, latent_dim)
+
+new_autoencoder_model = loaded_autoencoder_model = keras.models.model_from_json(model_architecture)
 new_autoencoder_model.set_weights(model_weights)
 
 loss = new_autoencoder_model.evaluate(test_data, test_data, batch_size=10)

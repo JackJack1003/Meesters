@@ -81,7 +81,8 @@ autoencoder_model.evaluate(test_data, test_data)
 file = getFile(0)
 with open(file, "wb") as file:
     saved_info = {
-        "model_weights": autoencoder_model.get_weights()
+        "model_weights": autoencoder_model.get_weights(), 
+        "model_architecture": autoencoder_model.to_json()
     }
     pickle.dump(saved_info, file)
 
