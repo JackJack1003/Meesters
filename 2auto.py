@@ -86,5 +86,5 @@ with open(file, "wb") as file:
     }
     pickle.dump(saved_info, file)
 
-
+print("Testing to JSON: ", autoencoder_model.to_json())
 print("DONNNEEEE")
