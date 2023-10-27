@@ -39,7 +39,7 @@ data = np.array(data)
 data = data / 255.0
 
 # Split the data into training and testing sets
-train_data, test_data = data[:200], data[200:]  # You can adjust the split as needed
+train_data, test_data = data[:460], data[460:]   # You can adjust the split as needed
 
 
 def build_autoencoder(input_shape, input_output_size, latent_space):
