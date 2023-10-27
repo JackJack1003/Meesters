@@ -69,7 +69,7 @@ def build_autoencoder(input_shape, latent_space):
     autoencoder_model.compile(optimizer='adam', loss='mean_squared_error')
 
     # Train the autoencoder
-    autoencoder_model.fit(train_data, train_data, epochs=50, batch_size=32, validation_data=(test_data, test_data))
+    #autoencoder_model.fit(train_data, train_data, epochs=50, batch_size=32, validation_data=(test_data, test_data))
 
     return autoencoder_model
 
