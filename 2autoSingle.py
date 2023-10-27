@@ -51,7 +51,7 @@ def load_model_and_hyperparameters(file_path):
         model_architecture = saved_info["model_architecture"]
         model_weights = saved_info["model_weights"]
         #hyperparameters = saved_info["hyperparameters"]
-    return model_weights
+    return model_weights, model_architecture
 
 
 parser = argparse.ArgumentParser()
