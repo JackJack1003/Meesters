@@ -47,7 +47,7 @@ def build_autoencoder(input_shape, latent_space):
     input_layer = layers.Input(input_shape)
     print(np.shape(input_layer))
 
-    encoder_input = keras.Input(shape=(input_layer,))
+    encoder_input = keras.Input(shape=(input_shape,))
     encoder = layers.Dense(128, activation='relu')(encoder_input)
     encoder = layers.Dense(64, activation='relu')(encoder)
     encoder = layers.Dense(32, activation='relu')(encoder)
