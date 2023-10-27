@@ -10,7 +10,7 @@ import gzip
 import tensorflow_model_optimization as tfmot
 import argparse
 
-print('Starting')
+print('Starting 2 single')
 
 
 data_files = ['chb01_01.edf', 'chb01_02.edf', 'chb01_03.edf', 'chb01_04.edf', 'chb01_05.edf','chb01_06.edf',
@@ -42,7 +42,7 @@ data = data / 255.0
 train_data, test_data = data[:460], data[460:]  # You can adjust the split as needed
 
 
-def build_autoencoder(input_shape, input_output_size, latent_space):
+def build_autoencoder(input_shape, latent_space):
     input_layer = layers.Input(shape=input_shape)
     print(np.shape(input_layer))
 
