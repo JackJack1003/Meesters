@@ -58,7 +58,7 @@ def build_autoencoder(input_shape, latent_space):
     decoder = layers.Dense(32, activation='relu')(decoder_input)
     decoder = layers.Dense(64, activation='relu')(decoder)
     decoder = layers.Dense(128, activation='relu')(decoder)
-    decoder_output = layers.Dense(input_layer, activation='sigmoid')(decoder)
+    decoder_output = layers.Dense(input_shape, activation='sigmoid')(decoder)
 
     # Models
     encoder_model = keras.Model(encoder_input, encoder_output, name="encoder")
