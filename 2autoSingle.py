@@ -44,7 +44,7 @@ train_data, test_data = data[:460], data[460:]  # You can adjust the split as ne
 
 
 def build_autoencoder(input_shape, latent_space):
-    input_layer = layers.Input(shape=input_shape)
+    input_layer = layers.Input(input_shape)
     print(np.shape(input_layer))
 
     encoder_input = keras.Input(shape=(input_layer,))
