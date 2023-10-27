@@ -89,7 +89,7 @@ file_path =  args.file
 
 model_weights = load_model_and_hyperparameters(file_path)
 
-input_dim = test_data.shape[1]
+input_dim = train_data.shape[1]
 latent_dim = input_dim // 2
 new_autoencoder_model = build_autoencoder(input_dim, latent_dim)
 new_autoencoder_model.set_weights(model_weights)
