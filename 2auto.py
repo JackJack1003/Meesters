@@ -85,14 +85,15 @@ file, file_model = getFile(0)
 with open(file, "wb") as file:
     saved_info = {
         "model_weights": autoencoder_model.get_weights(), 
-        "model_architecture": autoencoder_model.to_json()
     }
     pickle.dump(saved_info, file)
 with open(file_model, "wb") as file:
     saved_info = {
         "model_architecture": autoencoder_model.to_json()
     }
-    json.dump(saved_info, file)
+    json_string = json.dumps(saved_info)
+    json_bytes = json_string.encode('utf-8')
+    file.write(json_bytes)
 
 
 print("Testing to JSON: ", autoencoder_model.to_json())
