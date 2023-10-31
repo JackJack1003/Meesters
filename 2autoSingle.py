@@ -70,7 +70,7 @@ file_path =  args.file
 model_weights, model_architecture = load_model_and_hyperparameters(file_path)
 
 
-new_autoencoder_model = loaded_autoencoder_model = keras.models.model_from_json(model_architecture)
+new_autoencoder_model = keras.models.model_from_json(model_architecture)
 new_autoencoder_model.set_weights(model_weights)
 
 loss = new_autoencoder_model.evaluate(test_data, test_data, batch_size=10)
