@@ -65,7 +65,7 @@ decoder_input = keras.Input(shape=(latent_dim,))
 decoder = layers.Dense(32, activation='relu')(decoder_input)
 decoder = layers.Dense(64, activation='relu')(decoder)
 decoder = layers.Dense(128, activation='relu')(decoder)
-decoder_output = layers.Dense(input_dim, activation='sigmoid')(decoder)
+decoder_output = layers.Dense(input_dim, activation='relu')(decoder)
 
 # Models
 encoder_model = keras.Model(encoder_input, encoder_output, name="encoder")
