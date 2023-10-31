@@ -73,7 +73,7 @@ print(model_architecture)
 print("-------------------------------------------------------------")
 new_autoencoder_model = keras.models.model_from_json(model_architecture)
 new_autoencoder_model.set_weights(model_weights)
-
+new_autoencoder_model.compile(optimizer='nadam', loss='mean_squared_error')
 loss = new_autoencoder_model.evaluate(test_data, test_data, batch_size=10)
 print('loss is ', loss)
 
