@@ -48,6 +48,8 @@ train_data, test_data = data[:460], data[460:]  # You can adjust the split as ne
 def load_model_and_hyperparameters(file_path):
     with open(file_path, "rb") as file:
         saved_info = pickle.load(file)
+        print("Saved info keys: ")
+        print(saved_info.keys())
         model_architecture = saved_info["model_architecture"]
         model_weights = saved_info["model_weights"]
         #hyperparameters = saved_info["hyperparameters"]
