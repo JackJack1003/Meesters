@@ -52,7 +52,7 @@ def load_model_and_hyperparameters(file_path):
         print("Saved info keys:")
         print(saved_info.keys())
         model_weights = saved_info["model_weights"]
-    file_path = file_path.replace('.pkl', '.txt')
+    file_path = file_path.replace('.pkl', '.json')
     print('Nuwe file vir model is ', file_path)
     with open(file_path, "r") as file:
         saved_info = json.load(file)
