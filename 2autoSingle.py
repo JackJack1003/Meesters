@@ -10,6 +10,7 @@ from pathlib import Path
 import gzip
 import tensorflow_model_optimization as tfmot
 import argparse
+import json
 
 print('Starting 2 single')
 
@@ -48,10 +49,14 @@ train_data, test_data = data[:460], data[460:]  # You can adjust the split as ne
 def load_model_and_hyperparameters(file_path):
     with open(file_path, "rb") as file:
         saved_info = pickle.load(file)
-        print("Saved info keys: ")
+        print("Saved info keys:")
         print(saved_info.keys())
-        model_architecture = saved_info["model_architecture"]
         model_weights = saved_info["model_weights"]
+    file_path = file_path.replace('.pkl', '.txt')
+    print('Nuwe file vir model is ', file_path)
+    with open(file_path, "r") as file:
+        saved_info = json.load(file)
+        model_architecture = saved_info["model_architecture"]
         #hyperparameters = saved_info["hyperparameters"]
     return model_weights, model_architecture
 

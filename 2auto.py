@@ -6,18 +6,21 @@ import pyedflib
 from pathlib import Path
 import pickle
 import os
+import json
+
 print('Starting 2auto')
 def getFile(_start): 
     for i in range(_start,100):
         file = "2auto_"+str(i)+".pkl"
+        model_file = "2auto_"+str(i)+".json"
         if not os.path.exists(file): 
             Path(file).touch()
-            return file
+            return file, model_file
         elif os.path.getsize(file)/(1024*1024)>9: 
-            file = getFile(i+1)
-            return file
+            file, model_file = getFile(i+1)
+            return file, model_file
         else:
-            return file
+            return file, model_file
 
 data_files = ['chb01_01.edf', 'chb01_02.edf', 'chb01_03.edf', 'chb01_04.edf', 'chb01_05.edf','chb01_06.edf',
               'chb01_07.edf','chb01_08.edf',
@@ -78,13 +81,19 @@ autoencoder_model.fit(train_data, train_data, epochs=50, batch_size=32, validati
 #Evaluate the model if needed
 autoencoder_model.evaluate(test_data, test_data)
 
-file = getFile(0)
+file, file_model = getFile(0)
 with open(file, "wb") as file:
     saved_info = {
         "model_weights": autoencoder_model.get_weights(), 
         "model_architecture": autoencoder_model.to_json()
     }
     pickle.dump(saved_info, file)
+with open(file_model, "wb") as file:
+    saved_info = {
+        "model_architecture": autoencoder_model.to_json()
+    }
+    json.dump(saved_info, file)
+
 
 print("Testing to JSON: ", autoencoder_model.to_json())
 print("DONNNEEEE")
