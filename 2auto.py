@@ -55,9 +55,9 @@ latent_dim = input_dim // 2
 # first_layer = int(latent_dim * 1.3)  
 # second_layer = int(latent_dim * 1.2)  
 # third_layer = int(latent_dim * 1.1) 
-first_layer = 512
-second_layer = 256
-third_layer = 128
+first_layer = 1024
+second_layer = 512
+third_layer = 256
 
 print('first layer: ', first_layer)
 print('second_layer: ', second_layer)
