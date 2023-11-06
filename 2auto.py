@@ -52,9 +52,13 @@ train_data, test_data = data[:460], data[460:]
 # Define the autoencoder architecture
 input_dim = train_data.shape[1]
 latent_dim = input_dim // 2  
-first_layer = int(input_dim // 1.25)  
-second_layer = int(input_dim// 1.5)  
-third_layer = int(input_dim // 1.75) 
+first_layer = int(latent_dim * 1.25)  
+second_layer = int(latent_dim * 1.5)  
+third_layer = int(latent_dim * 1.75) 
+
+print('first layer: ', first_layer)
+print('second_layer: ', second_layer)
+print('third layer ', third_layer)
 # Encoder
 encoder_input = keras.Input(shape=(input_dim,))
 encoder = layers.Dense(first_layer, activation='elu')(encoder_input)
