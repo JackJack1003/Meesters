@@ -86,7 +86,7 @@ autoencoder_model = keras.Model(encoder_input, decoder_model(encoder_output), na
 autoencoder_model.compile(optimizer='adam', loss='mean_squared_error')
 
 # Train the autoencoder
-autoencoder_model.fit(train_data, train_data, epochs=20, batch_size=32, validation_data=(test_data, test_data))
+autoencoder_model.fit(train_data, train_data, epochs=10, batch_size=32, validation_data=(test_data, test_data))
 
 #Evaluate the model if needed
 autoencoder_model.evaluate(test_data, test_data)
