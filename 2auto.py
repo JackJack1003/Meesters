@@ -52,9 +52,9 @@ train_data, test_data = data[:460], data[460:]
 # Define the autoencoder architecture
 input_dim = train_data.shape[1]
 latent_dim = input_dim // 2  
-first_layer = int(latent_dim * 1.25)  
-second_layer = int(latent_dim * 1.5)  
-third_layer = int(latent_dim * 1.75) 
+first_layer = int(latent_dim * 0.9)  
+second_layer = int(latent_dim * 0.75)  
+third_layer = int(latent_dim * 0.6) 
 
 print('first layer: ', first_layer)
 print('second_layer: ', second_layer)
