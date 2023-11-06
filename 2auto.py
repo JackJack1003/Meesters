@@ -52,20 +52,22 @@ train_data, test_data = data[:460], data[460:]
 # Define the autoencoder architecture
 input_dim = train_data.shape[1]
 latent_dim = input_dim // 2  # Halve the complexity as per your requirement
-
+first_layer = input_dim//1.25
+second_layer = input_dim //1.5
+third_layer = input_dim //1.75
 # Encoder
 encoder_input = keras.Input(shape=(input_dim,))
-encoder = layers.Dense(128, activation='relu')(encoder_input)
-encoder = layers.Dense(64, activation='relu')(encoder)
-encoder = layers.Dense(32, activation='relu')(encoder)
-encoder_output = layers.Dense(latent_dim, activation='relu')(encoder)
+encoder = layers.Dense(first_layer, activation='elu')(encoder_input)
+encoder = layers.Dense(second_layer, activation='elu')(encoder)
+encoder = layers.Dense(third_layer, activation='elu')(encoder)
+encoder_output = layers.Dense(latent_dim, activation='elu')(encoder)
 
 # Decoder
 decoder_input = keras.Input(shape=(latent_dim,))
-decoder = layers.Dense(32, activation='relu')(decoder_input)
-decoder = layers.Dense(64, activation='relu')(decoder)
-decoder = layers.Dense(128, activation='relu')(decoder)
-decoder_output = layers.Dense(input_dim, activation='relu')(decoder)
+decoder = layers.Dense(third_layer, activation='elu')(decoder_input)
+decoder = layers.Dense(second_layer, activation='elu')(decoder)
+decoder = layers.Dense(first_layer, activation='elu')(decoder)
+decoder_output = layers.Dense(input_dim, activation='elu')(decoder)
 
 # Models
 encoder_model = keras.Model(encoder_input, encoder_output, name="encoder")
