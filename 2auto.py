@@ -51,10 +51,10 @@ data = data / 255.0
 train_data, test_data = data[:460], data[460:]  
 # Define the autoencoder architecture
 input_dim = train_data.shape[1]
-latent_dim = input_dim // 2  # Halve the complexity as per your requirement
-first_layer = input_dim//1.25
-second_layer = input_dim //1.5
-third_layer = input_dim //1.75
+latent_dim = input_dim // 2  
+first_layer = int(input_dim * 0.75)  
+second_layer = int(input_dim * 0.5)  
+third_layer = int(input_dim * 0.25) 
 # Encoder
 encoder_input = keras.Input(shape=(input_dim,))
 encoder = layers.Dense(first_layer, activation='elu')(encoder_input)
