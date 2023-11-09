@@ -17,8 +17,8 @@ def normalize(data):
     return normalized_data
 def getFile(_start): 
     for i in range(_start,100):
-        file = "alselu_normalized"+str(i)+".pkl"
-        model_file = "alselu_normalized"+str(i)+".json"
+        file = "relusigmoid_normalized"+str(i)+".pkl"
+        model_file = "relusigmoid_normalized"+str(i)+".json"
         if not os.path.exists(file): 
             Path(file).touch()
             return file, model_file
@@ -58,31 +58,29 @@ data = normalize(data)
 train_data, test_data = data[:460], data[460:]  
 # Define the autoencoder architecture
 input_dim = train_data.shape[1]
-latent_dim = input_dim // 2  
+# latent_dim = input_dim // 2  
 # first_layer = int(latent_dim * 1.3)  
 # second_layer = int(latent_dim * 1.2)  
 # third_layer = int(latent_dim * 1.1) 
 first_layer = 2048
 second_layer = 1024
 third_layer = 512
+latent_dim = 256
 
-print('first layer: ', first_layer)
-print('second_layer: ', second_layer)
-print('third layer ', third_layer)
-print('Latent layer ', latent_dim)
+
 # Encoder
 encoder_input = keras.Input(shape=(input_dim,))
-encoder = layers.Dense(first_layer, activation='elu')(encoder_input)
-encoder = layers.Dense(second_layer, activation='elu')(encoder)
-encoder = layers.Dense(third_layer, activation='elu')(encoder)
-encoder_output = layers.Dense(latent_dim, activation='elu')(encoder)
+encoder = layers.Dense(first_layer, activation='relu')(encoder_input)
+encoder = layers.Dense(second_layer, activation='relu')(encoder)
+encoder = layers.Dense(third_layer, activation='relu')(encoder)
+encoder_output = layers.Dense(latent_dim, activation='relu')(encoder)
 
 # Decoder
 decoder_input = keras.Input(shape=(latent_dim,))
-decoder = layers.Dense(third_layer, activation='elu')(decoder_input)
-decoder = layers.Dense(second_layer, activation='elu')(decoder)
-decoder = layers.Dense(first_layer, activation='elu')(decoder)
-decoder_output = layers.Dense(input_dim, activation='elu')(decoder)
+decoder = layers.Dense(third_layer, activation='relu')(decoder_input)
+decoder = layers.Dense(second_layer, activation='relu')(decoder)
+decoder = layers.Dense(first_layer, activation='relu')(decoder)
+decoder_output = layers.Dense(input_dim, activation='sigmoid')(decoder)
 
 # Models
 encoder_model = keras.Model(encoder_input, encoder_output, name="encoder")
