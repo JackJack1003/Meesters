@@ -66,7 +66,8 @@ data = np.array(data)
 data = data / 255.0
 data = normalize(data)
 
-
+print('MY DATA IS ', data)
+print('...................')
 train_data, test_data = data[:230], data[230:]  
 # Define the autoencoder architecture
 input_dim = train_data.shape[1]
