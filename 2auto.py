@@ -14,6 +14,10 @@ print('Starting 2auto')
 def normalize(data):
     min_val = np.min(data, axis=0)
     max_val = np.max(data, axis=0)
+    print('MY MAX: ', max_val)
+    print('...............')
+    print("MY MIN VALUE ", min_val)
+    print('...............')
     normalized_data = (data - min_val) / (max_val - min_val)
     return normalized_data
 def getFile(_start): 
@@ -29,13 +33,19 @@ def getFile(_start):
         else:
             return file, model_file
 
+# data_files = ['chb01_01.edf', 'chb01_02.edf', 'chb01_03.edf', 'chb01_04.edf', 'chb01_05.edf','chb01_06.edf',
+#               'chb01_07.edf','chb01_08.edf',
+#               'chb01_09.edf','chb01_10.edf', 
+#               'chb02_01.edf', 'chb02_02.edf', 'chb02_03.edf', 'chb02_04.edf', 'chb02_05.edf', 
+#               'chb02_06.edf',
+#             'chb02_07.edf', 'chb02_08.edf', 'chb02_09.edf', 'chb02_10.edf', 'chb02_11.edf', 
+#             'chb02_12.edf', 'chb02_13.edf', 'chb02_14.edf', 'chb02_15.edf'
+# ]
+
 data_files = ['chb01_01.edf', 'chb01_02.edf', 'chb01_03.edf', 'chb01_04.edf', 'chb01_05.edf','chb01_06.edf',
               'chb01_07.edf','chb01_08.edf',
               'chb01_09.edf','chb01_10.edf', 
-              'chb02_01.edf', 'chb02_02.edf', 'chb02_03.edf', 'chb02_04.edf', 'chb02_05.edf', 
-              'chb02_06.edf',
-            'chb02_07.edf', 'chb02_08.edf', 'chb02_09.edf', 'chb02_10.edf', 'chb02_11.edf', 
-            'chb02_12.edf', 'chb02_13.edf', 'chb02_14.edf', 'chb02_15.edf'
+              'chb02_01.edf'
 ]
 data = []
 
