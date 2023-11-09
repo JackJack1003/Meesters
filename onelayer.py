@@ -27,7 +27,7 @@ def normalize(data):
         
 def getFile(_start): 
     for i in range(_start,100):
-        file = "onelayer_leakyRelu_15_32_0.0001_0.1"+str(i)+".pkl"
+        file = "onelayer_leakyRelu_4096_15_32_0.0001_0.1"+str(i)+".pkl"
         model_file = "onelayer_leakyRelu_15_32_0.0001_0.1"+str(i)+".json"
         if not os.path.exists(file): 
             Path(file).touch()
