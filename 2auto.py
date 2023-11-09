@@ -20,11 +20,7 @@ def normalize(data):
     print("MY MIN VALUE ", min_val)
     print('...............')
     normalized_data = (data - min_val) / (max_val - min_val)
-    indices = np.where(np.isnan(normalized_data))
-    for i, j in zip(indices[0], indices[1]):
-        print(f'NAN found at index ({i}, {j})')
-        print('...............')
-        return normalized_data
+    normalized_data[np.isnan(normalized_data)] = 0
 def getFile(_start): 
     for i in range(_start,100):
         file = "relusigmoid_normalized"+str(i)+".pkl"
