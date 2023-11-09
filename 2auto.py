@@ -56,7 +56,7 @@ data = data / 255.0
 data = normalize(data)
 
 
-train_data, test_data = data[:460], data[460:]  
+train_data, test_data = data[:230], data[230:]  
 # Define the autoencoder architecture
 input_dim = train_data.shape[1]
 #latent_dim = input_dim // 2  
