@@ -8,6 +8,7 @@ import pickle
 import os
 import json
 from keras.layers import LeakyReLU
+from keras import optimizers
 
 print('Starting 2auto')
 def normalize(data):
@@ -52,43 +53,44 @@ data = np.array(data)
 
 
 data = data / 255.0
-#data = normalize(data)
+data = normalize(data)
 
 
 train_data, test_data = data[:460], data[460:]  
 # Define the autoencoder architecture
 input_dim = train_data.shape[1]
-latent_dim = input_dim // 2  
+#latent_dim = input_dim // 2  
 # first_layer = int(latent_dim * 1.3)  
 # second_layer = int(latent_dim * 1.2)  
 # third_layer = int(latent_dim * 1.1) 
 first_layer = 2048
 second_layer = 1024
 third_layer = 512
-#latent_dim = 256
+latent_dim = 256
 
 
 # Encoder
 encoder_input = keras.Input(shape=(input_dim,))
-encoder = layers.Dense(first_layer, activation='elu')(encoder_input)
-encoder = layers.Dense(second_layer, activation='elu')(encoder)
-encoder = layers.Dense(third_layer, activation='elu')(encoder)
-encoder_output = layers.Dense(latent_dim, activation='elu')(encoder)
+encoder = layers.Dense(first_layer, activation='relu')(encoder_input)
+encoder = layers.Dense(second_layer, activation='relu')(encoder)
+encoder = layers.Dense(third_layer, activation='relu')(encoder)
+encoder_output = layers.Dense(latent_dim, activation='relu')(encoder)
 
 # Decoder
 decoder_input = keras.Input(shape=(latent_dim,))
-decoder = layers.Dense(third_layer, activation='elu')(decoder_input)
-decoder = layers.Dense(second_layer, activation='elu')(decoder)
-decoder = layers.Dense(first_layer, activation='elu')(decoder)
-decoder_output = layers.Dense(input_dim, activation='elu')(decoder)
+decoder = layers.Dense(third_layer, activation='relu')(decoder_input)
+decoder = layers.Dense(second_layer, activation='relu')(decoder)
+decoder = layers.Dense(first_layer, activation='relu')(decoder)
+decoder_output = layers.Dense(input_dim, activation='sigmoid')(decoder)
 
 # Models
 encoder_model = keras.Model(encoder_input, encoder_output, name="encoder")
 decoder_model = keras.Model(decoder_input, decoder_output, name="decoder")
 autoencoder_model = keras.Model(encoder_input, decoder_model(encoder_output), name="autoencoder")
 
-# Compile the autoencoder
-autoencoder_model.compile(optimizer='adam', loss='mean_squared_error')
+
+custom_optimizer = optimizers.Adam(lr=0.001)  
+autoencoder_model.compile(optimizer=custom_optimizer, loss='mean_squared_error')
 
 # Train the autoencoder
 autoencoder_model.fit(train_data, train_data, epochs=10, batch_size=32, validation_data=(test_data, test_data))
