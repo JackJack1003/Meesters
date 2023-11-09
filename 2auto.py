@@ -19,7 +19,8 @@ def normalize(data):
     print('...............')
     print("MY MIN VALUE ", min_val)
     print('...............')
-    if (max_val-min_val)==0: 
+    threshold = 1e-10
+    if np.any((max_val-min_val)<threshold): 
         min_val *=0.95
     normalized_data = (data - min_val) / (max_val - min_val)
     return normalized_data
