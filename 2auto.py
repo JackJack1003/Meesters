@@ -20,7 +20,11 @@ def normalize(data):
     print("MY MIN VALUE ", min_val)
     print('...............')
     normalized_data = (data - min_val) / (max_val - min_val)
-    normalized_data[np.isnan(normalized_data)] = 0
+    for i in range(0, len(normalized_data)):
+        for j in range(0, len(normalized_data[i])): 
+            if math.isnan(normalized_data[i][j]): 
+                normalized_data[i][j] = 0 
+        
 def getFile(_start): 
     for i in range(_start,100):
         file = "relusigmoid_normalized"+str(i)+".pkl"
