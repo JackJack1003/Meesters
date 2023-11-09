@@ -27,8 +27,8 @@ def normalize(data):
         
 def getFile(_start): 
     for i in range(_start,100):
-        file = "onelayer_leakyRelu_4096_15_32_0.0001_0.1"+str(i)+".pkl"
-        model_file = "onelayer_leakyRelu_15_32_0.0001_0.1"+str(i)+".json"
+        file = "onelayer_relu_sigmoid"+str(i)+".pkl"
+        model_file = "onelayer_relu_sigmoid"+str(i)+".json"
         if not os.path.exists(file): 
             Path(file).touch()
             return file, model_file
@@ -90,7 +90,7 @@ encoder_output = layers.Dense(4096, activation='relu')(encoder_input)
 
 # Decoder
 decoder_input = keras.Input(shape=(4096,))
-decoder_output = layers.Dense(input_dim, activation=LeakyReLU(alpha=0.0001))(decoder_input)
+decoder_output = layers.Dense(input_dim, activation='sigmoid')(decoder_input)
 
 # Models
 encoder_model = keras.Model(encoder_input, encoder_output, name="encoder")
