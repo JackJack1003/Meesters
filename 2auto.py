@@ -52,7 +52,7 @@ data = np.array(data)
 
 
 data = data / 255.0
-data = normalize(data)
+#data = normalize(data)
 
 
 train_data, test_data = data[:460], data[460:]  
