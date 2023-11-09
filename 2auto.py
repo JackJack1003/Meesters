@@ -19,6 +19,8 @@ def normalize(data):
     print("MY MIN VALUE ", min_val)
     print('...............')
     normalized_data = (data - min_val) / (max_val - min_val)
+    print("MY DIVIDE ", (max_val - min_val))
+    print('...............')
     return normalized_data
 def getFile(_start): 
     for i in range(_start,100):
