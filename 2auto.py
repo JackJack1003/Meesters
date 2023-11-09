@@ -7,6 +7,7 @@ from pathlib import Path
 import pickle
 import os
 import json
+from keras.layers import LeakyReLU
 
 print('Starting 2auto')
 def getFile(_start): 
@@ -65,17 +66,17 @@ print('third layer ', third_layer)
 print('Latent layer ', latent_dim)
 # Encoder
 encoder_input = keras.Input(shape=(input_dim,))
-encoder = layers.Dense(first_layer, activation='elu')(encoder_input)
-encoder = layers.Dense(second_layer, activation='elu')(encoder)
-encoder = layers.Dense(third_layer, activation='elu')(encoder)
-encoder_output = layers.Dense(latent_dim, activation='elu')(encoder)
+encoder = layers.Dense(first_layer, activation=LeakyReLU(alpha=0.01))(encoder_input)
+encoder = layers.Dense(second_layer, activation=LeakyReLU(alpha=0.01))(encoder)
+encoder = layers.Dense(third_layer, activation=LeakyReLU(alpha=0.01))(encoder)
+encoder_output = layers.Dense(latent_dim, activation=LeakyReLU(alpha=0.01))(encoder)
 
 # Decoder
 decoder_input = keras.Input(shape=(latent_dim,))
-decoder = layers.Dense(third_layer, activation='elu')(decoder_input)
-decoder = layers.Dense(second_layer, activation='elu')(decoder)
-decoder = layers.Dense(first_layer, activation='elu')(decoder)
-decoder_output = layers.Dense(input_dim, activation='elu')(decoder)
+decoder = layers.Dense(third_layer, activation=LeakyReLU(alpha=0.01))(decoder_input)
+decoder = layers.Dense(second_layer, activation=LeakyReLU(alpha=0.01))(decoder)
+decoder = layers.Dense(first_layer, activation=LeakyReLU(alpha=0.01))(decoder)
+decoder_output = layers.Dense(input_dim, activation=LeakyReLU(alpha=0.01))(decoder)
 
 # Models
 encoder_model = keras.Model(encoder_input, encoder_output, name="encoder")
