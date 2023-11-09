@@ -20,7 +20,7 @@ def normalize(data):
     print("MY MIN VALUE ", min_val)
     print('...............')
     if (max_val-min_val)==0: 
-        min_val /=0.95
+        min_val *=0.95
     normalized_data = (data - min_val) / (max_val - min_val)
     return normalized_data
         
