@@ -13,6 +13,14 @@ if os.path.exists(folder_path):
             file_path = os.path.join(folder_path, file)
             os.remove(file_path)
             print(f"Removed: {file}")
+        if file.endswith(".json"):
+            file_path = os.path.join(folder_path, file)
+            os.remove(file_path)
+            print(f"Removed: {file}")
+        if file.endswith(".pkl"):
+                file_path = os.path.join(folder_path, file)
+                os.remove(file_path)
+                print(f"Removed: {file}")
 
     print("Files with '.txt' extension removed successfully.")
 else:
