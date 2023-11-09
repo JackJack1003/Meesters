@@ -10,10 +10,15 @@ import json
 from keras.layers import LeakyReLU
 
 print('Starting 2auto')
+def normalize(data):
+    min_val = np.min(data, axis=0)
+    max_val = np.max(data, axis=0)
+    normalized_data = (data - min_val) / (max_val - min_val)
+    return normalized_data
 def getFile(_start): 
     for i in range(_start,100):
-        file = "2auto_"+str(i)+".pkl"
-        model_file = "2auto_"+str(i)+".json"
+        file = "alselu_normalized"+str(i)+".pkl"
+        model_file = "alselu_normalized"+str(i)+".json"
         if not os.path.exists(file): 
             Path(file).touch()
             return file, model_file
@@ -47,6 +52,7 @@ data = np.array(data)
 
 
 data = data / 255.0
+data = normalize(data)
 
 
 train_data, test_data = data[:460], data[460:]  
@@ -66,17 +72,17 @@ print('third layer ', third_layer)
 print('Latent layer ', latent_dim)
 # Encoder
 encoder_input = keras.Input(shape=(input_dim,))
-encoder = layers.Dense(first_layer, activation=LeakyReLU(alpha=0.01))(encoder_input)
-encoder = layers.Dense(second_layer, activation=LeakyReLU(alpha=0.01))(encoder)
-encoder = layers.Dense(third_layer, activation=LeakyReLU(alpha=0.01))(encoder)
-encoder_output = layers.Dense(latent_dim, activation=LeakyReLU(alpha=0.01))(encoder)
+encoder = layers.Dense(first_layer, activation='elu')(encoder_input)
+encoder = layers.Dense(second_layer, activation='elu')(encoder)
+encoder = layers.Dense(third_layer, activation='elu')(encoder)
+encoder_output = layers.Dense(latent_dim, activation='elu')(encoder)
 
 # Decoder
 decoder_input = keras.Input(shape=(latent_dim,))
-decoder = layers.Dense(third_layer, activation=LeakyReLU(alpha=0.01))(decoder_input)
-decoder = layers.Dense(second_layer, activation=LeakyReLU(alpha=0.01))(decoder)
-decoder = layers.Dense(first_layer, activation=LeakyReLU(alpha=0.01))(decoder)
-decoder_output = layers.Dense(input_dim, activation=LeakyReLU(alpha=0.01))(decoder)
+decoder = layers.Dense(third_layer, activation='elu')(decoder_input)
+decoder = layers.Dense(second_layer, activation='elu')(decoder)
+decoder = layers.Dense(first_layer, activation='elu')(decoder)
+decoder_output = layers.Dense(input_dim, activation='elu')(decoder)
 
 # Models
 encoder_model = keras.Model(encoder_input, encoder_output, name="encoder")
