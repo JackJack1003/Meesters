@@ -97,7 +97,7 @@ model = Autoencoder_EEG()
 criterion = nn.MSELoss()
 optimizer = optim.Adam(model.parameters(), lr=1e-3, weight_decay=1e-5)
 
-num_epochs = 1
+num_epochs = 5
 outputs = []
 for epoch in range(num_epochs):
     for eeg_batch in data_loader:
