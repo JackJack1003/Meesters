@@ -81,7 +81,7 @@ single_file = str(file_path)+'_single.txt'
 if not os.path.exists(single_file): 
     Path(single_file).touch()
 with open(single_file, "w") as file:
-    file.write('LOSS: ${loss}')
+    file.write(f'LOSS: {loss}')  
     for i in range(0,5): 
         np.savetxt(file, test_data[i], fmt="%f", delimiter=", ")
         file.write('---')   
