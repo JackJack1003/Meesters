@@ -27,8 +27,8 @@ def normalize(data):
         
 def getFile(_start): 
     for i in range(_start,100):
-        file = "onelayer_relu_sigmoid"+str(i)+".pkl"
-        model_file = "onelayer_relu_sigmoid"+str(i)+".json"
+        file = "onelayer_relusig_15_10_0.0001_11"+str(i)+".pkl"
+        model_file = "onelayer_relusig_15_10_0.0001_1"+str(i)+".json"
         if not os.path.exists(file): 
             Path(file).touch()
             return file, model_file
@@ -102,7 +102,7 @@ autoencoder_model.compile(optimizer=custom_optimizer, loss='mean_squared_error')
 autoencoder_model.summary()
 
 # Train the autoencoder
-autoencoder_model.fit(train_data, train_data, epochs=15, batch_size=32, validation_data=(test_data, test_data))
+autoencoder_model.fit(train_data, train_data, epochs=15, batch_size=10, validation_data=(test_data, test_data))
 
 # Evaluate the model if needed
 autoencoder_model.evaluate(test_data, test_data)
