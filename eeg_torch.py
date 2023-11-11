@@ -54,7 +54,7 @@ data = data / 255.0
 data = normalize(data)
 
 
-eeg_data_tensor = torch.tensor(data, dtype=torch.float)
+eeg_data_tensor = torch.tensor(data[:230], dtype=torch.float)
 
 class EEGDataset(Dataset):
     def __init__(self, data):
@@ -111,4 +111,26 @@ for epoch in range(num_epochs):
     print(f'Epoch:{epoch+1}, Loss:{loss.item():.4f}')
     outputs.append((epoch, eeg_batch, recon))
 
+
+# Assuming you have test data in a variable called test_data
+
+# Convert test data to a PyTorch tensor
+test_data = torch.tensor(data[230:], dtype=torch.float)
+
+# Pass the test data through the trained model's decoder
+with torch.no_grad():
+    reconstructed_data = model.decoder(model.encoder(test_data))
+
+single_file = 'eeg_1024.txt'
+if not os.path.exists(single_file): 
+    Path(single_file).touch()
+with open(single_file, "w") as file:
+    file.write(f'LOSS: {loss}')  
+    for i in range(0,5): 
+        np.savetxt(file, test_data[i], fmt="%f", delimiter=", ")
+        file.write('---')   
+    for i in range(0,5):  
+        np.savetxt(file, reconstructed_data[i], fmt="%f", delimiter=", ")
+        file.write('---')  
 print('MY RECON IS: ', recon)
+print('DONE')
