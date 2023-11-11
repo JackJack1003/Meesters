@@ -27,8 +27,8 @@ def normalize(data):
         
 def getFile(_start): 
     for i in range(_start,100):
-        file = "onelayer_relusig_1024_15_10_0.0001_11.pkl"
-        model_file = "onelayer_relusig_1024_15_10_0.0001_11.json"
+        file = "onelayer_relusig_2048_15_10_0.0001_11.pkl"
+        model_file = "onelayer_relusig_2048_15_10_0.0001_11.json"
         if not os.path.exists(file): 
             Path(file).touch()
             return file, model_file
