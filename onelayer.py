@@ -27,8 +27,8 @@ def normalize(data):
         
 def getFile(_start): 
     for i in range(_start,100):
-        file = "onelayer_relusig_2048_15_10_0.0001_11.pkl"
-        model_file = "onelayer_relusig_2048_15_10_0.0001_11.json"
+        file = "onelayer_relusig_4096_15_10_0.0001_11.pkl"
+        model_file = "onelayer_relusig_4096_15_10_0.0001_11.json"
         if not os.path.exists(file): 
             Path(file).touch()
             return file, model_file
@@ -86,10 +86,10 @@ latent_dim = 256
 
 # Encoder
 encoder_input = keras.Input(shape=(input_dim,))
-encoder_output = layers.Dense(2048, activation='relu')(encoder_input)
+encoder_output = layers.Dense(4096, activation='relu')(encoder_input)
 
 # Decoder
-decoder_input = keras.Input(shape=(2048,))
+decoder_input = keras.Input(shape=(4096,))
 decoder_output = layers.Dense(input_dim, activation=LeakyReLU(alpha=0.01))(decoder_input)
 
 # Models
