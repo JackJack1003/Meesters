@@ -110,3 +110,5 @@ for epoch in range(num_epochs):
 
     print(f'Epoch:{epoch+1}, Loss:{loss.item():.4f}')
     outputs.append((epoch, eeg_batch, recon))
+
+print('MY RECON IS: ', recon)
