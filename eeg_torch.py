@@ -74,16 +74,16 @@ class Autoencoder_EEG(nn.Module):
     def __init__(self):
         super().__init__()        
         self.encoder = nn.Sequential(
-            nn.Linear(len(data[0]), 2048),  # Adjust input size
+            nn.Linear(len(data[0]), 4096),  # Adjust input size
             nn.ReLU(),
-            nn.Linear(2048, 1024)
+            nn.Linear(4096, 2048)
 
         )
         
         self.decoder = nn.Sequential(
-            nn.Linear(1024, 2048),
+            nn.Linear(2048, 4096),
             nn.ReLU(),
-            nn.Linear(2048, len(data[0])),
+            nn.Linear(4096, len(data[0])),
             nn.Sigmoid()
         )
 
@@ -97,7 +97,7 @@ model = Autoencoder_EEG()
 criterion = nn.MSELoss()
 optimizer = optim.Adam(model.parameters(), lr=1e-3, weight_decay=1e-5)
 
-num_epochs = 5
+num_epochs = 10
 outputs = []
 for epoch in range(num_epochs):
     for eeg_batch in data_loader:
@@ -121,7 +121,7 @@ test_data = torch.tensor(data[230:], dtype=torch.float)
 with torch.no_grad():
     reconstructed_data = model.decoder(model.encoder(test_data))
 
-single_file = 'eeg_1024.txt'
+single_file = 'eeg_2048.txt'
 if not os.path.exists(single_file): 
     Path(single_file).touch()
 with open(single_file, "w") as file:
