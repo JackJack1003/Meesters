@@ -86,10 +86,10 @@ latent_dim = 256
 
 # Encoder
 encoder_input = keras.Input(shape=(input_dim,))
-encoder_output = layers.Dense(1024, activation='relu')(encoder_input)
+encoder_output = layers.Dense(2048, activation='relu')(encoder_input)
 
 # Decoder
-decoder_input = keras.Input(shape=(1024,))
+decoder_input = keras.Input(shape=(2048,))
 decoder_output = layers.Dense(input_dim, activation=LeakyReLU(alpha=0.01))(decoder_input)
 
 # Models
