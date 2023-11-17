@@ -117,7 +117,7 @@ for epoch in range(num_epochs):
 # Assuming you have test data in a variable called test_data
 
 # Convert test data to a PyTorch tensor
-test_data = torch.tensor(data[18:], dtype=torch.float)
+test_data = torch.tensor(data[15:], dtype=torch.float)
 
 # Pass the test data through the trained model's decoder
 with torch.no_grad():
@@ -130,7 +130,7 @@ with torch.no_grad():
 # plt.subplot(2,1,2)
 # plt.plot(reconstructed_data[:500])
 # plt.show()
-single_file = 'eeg_2048.txt'
+single_file = 'torch_eeg_2048.txt'
 if not os.path.exists(single_file): 
     Path(single_file).touch()
 with open(single_file, "w") as file:
