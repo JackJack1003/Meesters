@@ -27,6 +27,9 @@ def normalize(data):
     if np.any((max_val-min_val)<threshold): 
         min_val *=0.95
     normalized_data = (data - min_val) / (max_val - min_val)
+    nan_indices = np.isnan(normalized_data)
+    # Replace NaN values with 0
+    normalized_data[nan_indices] = 0
     return normalized_data
 
 
