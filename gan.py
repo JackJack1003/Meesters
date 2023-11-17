@@ -4,6 +4,8 @@ import tensorflow as tf
 from tensorflow import keras
 from tensorflow.keras import layers
 import pyedflib
+import os
+from pathlib import Path
 
 # Function to load EEG data from EDF files
 def load_eeg_data(data_files):
@@ -68,7 +70,7 @@ gan.compile(loss='binary_crossentropy', optimizer=keras.optimizers.Adam(learning
 
 # Training the GAN
 batch_size = 64
-epochs = 10000
+epochs = 50 #10000
 
 for epoch in range(epochs):
     for _ in range(len(EEG_DATA) // batch_size):
@@ -99,19 +101,31 @@ noise = np.random.normal(0, 1, (num_samples, latent_dim))
 generated_data = generator.predict(noise)
 np.save('synthetic_eeg.npy', generated_data)
 
-# Plot generated vs. real EEG data
-plt.figure(figsize=(12, 6))
-plt.subplot(2, 1, 1)
-plt.plot(EEG_DATA[0])
-plt.title('Real EEG Data')
-plt.xlabel('Time')
-plt.ylabel('Amplitude')
+# # Plot generated vs. real EEG data
+# plt.figure(figsize=(12, 6))
+# plt.subplot(2, 1, 1)
+# plt.plot(EEG_DATA[0])
+# plt.title('Real EEG Data')
+# plt.xlabel('Time')
+# plt.ylabel('Amplitude')
 
-plt.subplot(2, 1, 2)
-plt.plot(generated_data[0])
-plt.title('Generated EEG Data')
-plt.xlabel('Time')
-plt.ylabel('Amplitude')
+# plt.subplot(2, 1, 2)
+# plt.plot(generated_data[0])
+# plt.title('Generated EEG Data')
+# plt.xlabel('Time')
+# plt.ylabel('Amplitude')
 
-plt.tight_layout()
-plt.show()
+# plt.tight_layout()
+# plt.show()
+
+single_file = 'gan_0_1.txt'
+if not os.path.exists(single_file): 
+    Path(single_file).touch()
+with open(single_file, "w") as file:
+    for i in range(0,5): 
+        np.savetxt(file, EEG_DATA[i], fmt="%f", delimiter=", ")
+        file.write('---')   
+    for i in range(0,5):  
+        np.savetxt(file, generated_data[i], fmt="%f", delimiter=", ")
+        file.write('---')  
+print('DONE')
