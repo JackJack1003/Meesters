@@ -47,10 +47,7 @@ def getFile(_start):
 #             'chb02_12.edf', 'chb02_13.edf', 'chb02_14.edf', 'chb02_15.edf'
 # ]
 
-data_files = ['chb01_01.edf', 'chb01_02.edf', 'chb01_03.edf', 'chb01_04.edf', 'chb01_05.edf','chb01_06.edf',
-              'chb01_07.edf','chb01_08.edf',
-              'chb01_09.edf','chb01_10.edf', 
-              'chb02_01.edf'
+data_files = ['chb01_01.edf'
 ]
 data = []
 
@@ -134,3 +131,22 @@ with open(file_model, "wb") as file:
 
 print("Testing to JSON: ", autoencoder_model.to_json())
 print("DONNNEEEE")
+
+loss = autoencoder_model.evaluate(test_data, test_data, batch_size=10)
+print('loss is ', loss)
+
+
+reconstructed_data = autoencoder_model.predict(test_data)
+
+single_file = '2auto_1.txt'
+if not os.path.exists(single_file): 
+    Path(single_file).touch()
+with open(single_file, "w") as file:
+    file.write(f'LOSS: {loss}')  
+    for i in range(0,5): 
+        np.savetxt(file, test_data[i], fmt="%f", delimiter=", ")
+        file.write('---')   
+    for i in range(0,5):  
+        np.savetxt(file, reconstructed_data[i], fmt="%f", delimiter=", ")
+        file.write('---')  
+print('DONE')
