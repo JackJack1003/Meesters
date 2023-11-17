@@ -56,7 +56,7 @@ data = data / 255.0
 data = normalize(data)
 
 
-eeg_data_tensor = torch.tensor(data[:36], dtype=torch.float)
+eeg_data_tensor = torch.tensor(data[:400], dtype=torch.float)
 
 class EEGDataset(Dataset):
     def __init__(self, data):
@@ -130,7 +130,7 @@ with torch.no_grad():
 # plt.subplot(2,1,2)
 # plt.plot(reconstructed_data[:500])
 # plt.show()
-single_file = '4_torch_eeg_2048.txt'
+single_file = '8_torch_eeg_2048.txt'
 if not os.path.exists(single_file): 
     Path(single_file).touch()
 with open(single_file, "w") as file:
