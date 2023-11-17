@@ -30,13 +30,13 @@ def normalize(data):
     return normalized_data
 
 
-# data_files = ['chb01_01.edf', 'chb01_02.edf', 'chb01_03.edf', 'chb01_04.edf', 'chb01_05.edf','chb01_06.edf',
-#               'chb01_07.edf','chb01_08.edf',
-#               'chb01_09.edf','chb01_10.edf', 
-#               'chb02_01.edf'
-# ]
+data_files = ['chb01_01.edf', 'chb01_02.edf', 'chb01_03.edf', 'chb01_04.edf', 'chb01_05.edf','chb01_06.edf',
+              'chb01_07.edf','chb01_08.edf',
+              'chb01_09.edf','chb01_10.edf', 
+              'chb02_01.edf'
+]
 
-data_files = ['chb01_01.edf', 'chb01_02.edf', 'chb01_03.edf', 'chb01_04.edf']
+#data_files = ['chb01_01.edf', 'chb01_02.edf', 'chb01_03.edf', 'chb01_04.edf']
 data = []
 
 for d in data_files:
