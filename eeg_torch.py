@@ -76,16 +76,16 @@ class Autoencoder_EEG(nn.Module):
     def __init__(self):
         super().__init__()        
         self.encoder = nn.Sequential(
-            nn.Linear(len(data[0]), 2048),  # Adjust input size
+            nn.Linear(len(data[0]), 4096),  # Adjust input size
             nn.ReLU(),
-            nn.Linear(2048, 1024)
+            nn.Linear(4096, 2048)
 
         )
         
         self.decoder = nn.Sequential(
-            nn.Linear(1024, 2048),
+            nn.Linear(2048, 4096),
             nn.ReLU(),
-            nn.Linear(2048, len(data[0])),
+            nn.Linear(4096, len(data[0])),
             nn.Sigmoid()
         )
 
@@ -130,7 +130,7 @@ with torch.no_grad():
 # plt.subplot(2,1,2)
 # plt.plot(reconstructed_data[:500])
 # plt.show()
-single_file = '8_torch_eeg_2048.txt'
+single_file = '8_torch_eeg_4096.txt'
 if not os.path.exists(single_file): 
     Path(single_file).touch()
 with open(single_file, "w") as file:
