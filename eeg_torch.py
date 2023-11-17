@@ -30,11 +30,13 @@ def normalize(data):
     return normalized_data
 
 
-data_files = ['chb01_01.edf', 'chb01_02.edf', 'chb01_03.edf', 'chb01_04.edf', 'chb01_05.edf','chb01_06.edf',
-              'chb01_07.edf','chb01_08.edf',
-              'chb01_09.edf','chb01_10.edf', 
-              'chb02_01.edf'
-]
+# data_files = ['chb01_01.edf', 'chb01_02.edf', 'chb01_03.edf', 'chb01_04.edf', 'chb01_05.edf','chb01_06.edf',
+#               'chb01_07.edf','chb01_08.edf',
+#               'chb01_09.edf','chb01_10.edf', 
+#               'chb02_01.edf'
+# ]
+
+data_files = ['chb01_01.edf']
 data = []
 
 for d in data_files:
@@ -54,7 +56,7 @@ data = data / 255.0
 data = normalize(data)
 
 
-eeg_data_tensor = torch.tensor(data[:230], dtype=torch.float)
+eeg_data_tensor = torch.tensor(data[:20], dtype=torch.float)
 
 class EEGDataset(Dataset):
     def __init__(self, data):
@@ -74,16 +76,16 @@ class Autoencoder_EEG(nn.Module):
     def __init__(self):
         super().__init__()        
         self.encoder = nn.Sequential(
-            nn.Linear(len(data[0]), 4096),  # Adjust input size
+            nn.Linear(len(data[0]), 2048),  # Adjust input size
             nn.ReLU(),
-            nn.Linear(4096, 2048)
+            nn.Linear(2048, 1024)
 
         )
         
         self.decoder = nn.Sequential(
-            nn.Linear(2048, 4096),
+            nn.Linear(1024, 2048),
             nn.ReLU(),
-            nn.Linear(4096, len(data[0])),
+            nn.Linear(2048, len(data[0])),
             nn.Sigmoid()
         )
 
@@ -97,7 +99,7 @@ model = Autoencoder_EEG()
 criterion = nn.MSELoss()
 optimizer = optim.Adam(model.parameters(), lr=1e-3, weight_decay=1e-5)
 
-num_epochs = 10
+num_epochs = 5
 outputs = []
 for epoch in range(num_epochs):
     for eeg_batch in data_loader:
@@ -115,12 +117,19 @@ for epoch in range(num_epochs):
 # Assuming you have test data in a variable called test_data
 
 # Convert test data to a PyTorch tensor
-test_data = torch.tensor(data[230:], dtype=torch.float)
+test_data = torch.tensor(data[20:], dtype=torch.float)
 
 # Pass the test data through the trained model's decoder
 with torch.no_grad():
     reconstructed_data = model.decoder(model.encoder(test_data))
 
+
+# plt.subplot(2,1,1)
+# plt.plot(test_data[:500])
+
+# plt.subplot(2,1,2)
+# plt.plot(reconstructed_data[:500])
+# plt.show()
 single_file = 'eeg_2048.txt'
 if not os.path.exists(single_file): 
     Path(single_file).touch()
