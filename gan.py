@@ -73,6 +73,7 @@ batch_size = 64
 epochs = 50 #10000
 
 for epoch in range(epochs):
+    print('Besig met epoch ', epoch)
     for _ in range(len(EEG_DATA) // batch_size):
         # Train the discriminator
         noise = np.random.normal(0, 1, (batch_size, latent_dim))
