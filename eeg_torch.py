@@ -36,7 +36,7 @@ def normalize(data):
 #               'chb02_01.edf'
 # ]
 
-data_files = ['chb01_01.edf', 'chb01_02.edf']
+data_files = ['chb01_01.edf', 'chb01_02.edf', 'chb01_03.edf', 'chb01_04.edf']
 data = []
 
 for d in data_files:
@@ -130,7 +130,7 @@ with torch.no_grad():
 # plt.subplot(2,1,2)
 # plt.plot(reconstructed_data[:500])
 # plt.show()
-single_file = '2_torch_eeg_2048.txt'
+single_file = '4_torch_eeg_2048.txt'
 if not os.path.exists(single_file): 
     Path(single_file).touch()
 with open(single_file, "w") as file:
