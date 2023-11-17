@@ -70,7 +70,7 @@ gan.compile(loss='binary_crossentropy', optimizer=keras.optimizers.Adam(learning
 
 # Training the GAN
 batch_size = 64
-epochs = 50 #10000
+epochs = 20 #10000
 
 for epoch in range(epochs):
     print('Besig met epoch ', epoch)
