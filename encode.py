@@ -2,6 +2,9 @@ import numpy as np
 import tensorflow as tf
 from tensorflow.keras import layers, models
 import matplotlib.pyplot as plt
+from pathlib import Path
+import pickle
+import os
 
 import pyedflib
 print('Starting')
@@ -56,7 +59,7 @@ autoencoder_model = build_autoencoder(train_data.shape[1:])
 autoencoder_model.summary()
 
 # Step 5: Train the autoencoder
-epochs = 30
+epochs = 20
 batch_size = 3
 
 history = autoencoder_model.fit(
@@ -79,18 +82,31 @@ num_examples = 5  # Number of examples to visualize
 reconstructed_data = autoencoder_model.predict(test_data)
 
 # Plot the original and reconstructed data
-plt.figure(figsize=(12, 6))
-for i in range(num_examples):
-    # Original data
-    plt.subplot(2, num_examples, i + 1)
-    plt.plot(test_data[i])
-    plt.title(f"Original {i + 1}")
+# plt.figure(figsize=(12, 6))
+# for i in range(num_examples):
+#     # Original data
+#     plt.subplot(2, num_examples, i + 1)
+#     plt.plot(test_data[i])
+#     plt.title(f"Original {i + 1}")
 
-    # Reconstructed data
-    plt.subplot(2, num_examples, i + num_examples + 1)
-    plt.plot(reconstructed_data[i])
-    plt.title(f"Reconstructed {i + 1}")
+#     # Reconstructed data
+#     plt.subplot(2, num_examples, i + num_examples + 1)
+#     plt.plot(reconstructed_data[i])
+#     plt.title(f"Reconstructed {i + 1}")
 
-plt.tight_layout()
-plt.show()
+# plt.tight_layout()
+# plt.show()
+
+single_file = 'encode_1.txt'
+if not os.path.exists(single_file): 
+    Path(single_file).touch()
+with open(single_file, "w") as file:
+    file.write(f'LOSS: {loss}')  
+    for i in range(0,5): 
+        np.savetxt(file, test_data[i], fmt="%f", delimiter=", ")
+        file.write('---')   
+    for i in range(0,5):  
+        np.savetxt(file, reconstructed_data[i], fmt="%f", delimiter=", ")
+        file.write('---')  
+print('DONE')
 
