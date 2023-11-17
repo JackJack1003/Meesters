@@ -15,7 +15,7 @@ from keras.layers import LeakyReLU
 from keras import optimizers
 import math
 
-print('Starting 2auto')
+print('Starting torch')
 def normalize(data):
     min_val = np.min(data, axis=0)
     max_val = np.max(data, axis=0)
@@ -56,7 +56,7 @@ data = data / 255.0
 data = normalize(data)
 
 
-eeg_data_tensor = torch.tensor(data[:20], dtype=torch.float)
+eeg_data_tensor = torch.tensor(data[:18], dtype=torch.float)
 
 class EEGDataset(Dataset):
     def __init__(self, data):
@@ -117,7 +117,7 @@ for epoch in range(num_epochs):
 # Assuming you have test data in a variable called test_data
 
 # Convert test data to a PyTorch tensor
-test_data = torch.tensor(data[20:], dtype=torch.float)
+test_data = torch.tensor(data[18:], dtype=torch.float)
 
 # Pass the test data through the trained model's decoder
 with torch.no_grad():
