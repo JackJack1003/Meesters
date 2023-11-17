@@ -36,7 +36,7 @@ def normalize(data):
 #               'chb02_01.edf'
 # ]
 
-data_files = ['chb01_01.edf']
+data_files = ['chb01_01.edf', 'chb01_02.edf']
 data = []
 
 for d in data_files:
