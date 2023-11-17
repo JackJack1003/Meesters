@@ -56,7 +56,7 @@ data = data / 255.0
 data = normalize(data)
 
 
-eeg_data_tensor = torch.tensor(data[:18], dtype=torch.float)
+eeg_data_tensor = torch.tensor(data[:36], dtype=torch.float)
 
 class EEGDataset(Dataset):
     def __init__(self, data):
