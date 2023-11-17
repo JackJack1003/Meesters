@@ -52,7 +52,7 @@ for d in data_files:
 data = np.array(data)
 
 
-data = data / 255.0
+data = data // 255.0
 data = normalize(data)
 
 
