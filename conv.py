@@ -88,13 +88,13 @@ autoencoder.summary()
 autoencoder.compile(optimizer='adam', loss='binary_crossentropy')
 epochs = 10  # Adjust as needed
 history =autoencoder.fit(x_train, x_train, epochs=epochs, batch_size=10, shuffle=True)
-decoded_eeg = autoencoder.predict(test_data)
+decoded_eeg = autoencoder.predict(x_test)
 result_file = "actual_vs_predicted.txt"
 
 with open(result_file, "w") as file:
     file.write("Actual\tPredicted\n")
-    for i in range(len(test_data)):
-        actual = test_data[i].flatten()
+    for i in range(len(x_test)):
+        actual = x_test[i].flatten()
         predicted = decoded_eeg[i].flatten()
         file.write("\t".join([str(val) for val in actual]) + "\t" + "\t".join([str(val) for val in predicted]) + "\n")
 
