@@ -58,7 +58,7 @@ train_data, test_data = data[:20], data[20:]
 samples, data_length = len(data), len(data[0][:100])
 
 
-x_train = data[:5].reshape((None, data_length, 1))
+x_train = data[:5].reshape((-1, data_length, 1))
 # Input layer
 input_window = Input(shape=(data_length, 1))
 
