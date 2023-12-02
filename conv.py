@@ -55,7 +55,7 @@ print('...................')
 train_data, test_data = data[:20], data[20:]  
 # Assuming your input data has a shape of (23, 912600)
 # Adjust these values based on your actual data
-samples, data_length = len(data), len(data[0])
+samples, data_length = len(data), len(data[0][:250])
 
 
 x_train = data[:5].reshape((5, data_length, 1))
