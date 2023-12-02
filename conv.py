@@ -86,7 +86,7 @@ autoencoder.summary()
 
 # Compile and train the model
 autoencoder.compile(optimizer='adam', loss='binary_crossentropy')
-epochs = 10  # Adjust as needed
+epochs = 5  # Adjust as needed
 history =autoencoder.fit(x_train, x_train, epochs=epochs, batch_size=10, shuffle=True)
 decoded_eeg = autoencoder.predict(x_test)
 result_file = "actual_vs_predicted.txt"
@@ -101,6 +101,6 @@ with open(result_file, "w") as file:
 # Save the loss history to a text file
 loss_history_file = "loss_history.txt"
 with open(loss_history_file, "w") as file:
-    file.write("Epoch\tLoss\tVal_Loss\n")
+    file.write("Epoch\tLoss\n")
     for i in range(epochs):
-        file.write(f"{i + 1}\t{history.history['loss'][i]}\t{history.history['val_loss'][i]}\n")
+        file.write(f"{i + 1}\t{history.history['loss'][i]}\n")
