@@ -58,7 +58,7 @@ train_data, test_data = data[:20], data[20:]
 samples, data_length = len(data), len(data[0])
 
 
-x_train = data[:20].reshape((20, data_length, 1))
+x_train = data[:5].reshape((5, data_length, 1))
 # Input layer
 input_window = Input(shape=(data_length, 1))
 
@@ -86,4 +86,20 @@ autoencoder.summary()
 # Compile and train the model
 autoencoder.compile(optimizer='adam', loss='binary_crossentropy')
 epochs = 10  # Adjust as needed
-autoencoder.fit(x_train, x_train, epochs=epochs, batch_size=1, shuffle=True)
+history =autoencoder.fit(x_train, x_train, epochs=epochs, batch_size=10, shuffle=True)
+decoded_eeg = autoencoder.predict(test_data)
+result_file = "actual_vs_predicted.txt"
+
+with open(result_file, "w") as file:
+    file.write("Actual\tPredicted\n")
+    for i in range(len(test_data)):
+        actual = test_data[i].flatten()
+        predicted = decoded_eeg[i].flatten()
+        file.write("\t".join([str(val) for val in actual]) + "\t" + "\t".join([str(val) for val in predicted]) + "\n")
+
+# Save the loss history to a text file
+loss_history_file = "loss_history.txt"
+with open(loss_history_file, "w") as file:
+    file.write("Epoch\tLoss\tVal_Loss\n")
+    for i in range(epochs):
+        file.write(f"{i + 1}\t{history.history['loss'][i]}\t{history.history['val_loss'][i]}\n")
