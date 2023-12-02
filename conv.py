@@ -86,7 +86,7 @@ autoencoder.summary()
 
 # Compile and train the model
 autoencoder.compile(optimizer='adam', loss='binary_crossentropy')
-epochs = 5  # Adjust as needed
+epochs = 10  # Adjust as needed
 history =autoencoder.fit(x_train, x_train, epochs=epochs, batch_size=10, shuffle=True)
 decoded_eeg = autoencoder.predict(x_test)
 result_file = "actual_vs_predicted.txt"
