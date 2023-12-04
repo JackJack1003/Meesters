@@ -85,7 +85,7 @@ autoencoder = Model(input_window, decoded)
 autoencoder.summary()
 
 # Compile and train the model with EarlyStopping
-threshold_loss = 0.0001  # Set your desired threshold
+threshold_loss = 0.001  # Set your desired threshold
 early_stopping = EarlyStopping(monitor='loss', patience=3, mode='min', min_delta=threshold_loss)
 
 autoencoder.compile(optimizer='adam', loss='binary_crossentropy')
