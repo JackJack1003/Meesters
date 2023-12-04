@@ -89,9 +89,9 @@ threshold_loss = 0.0001  # Set your desired threshold
 early_stopping = EarlyStopping(monitor='loss', patience=3, mode='min', min_delta=threshold_loss)
 
 autoencoder.compile(optimizer='adam', loss='binary_crossentropy')
-epochs = 20  # Adjust as needed
+epochs = 50  
 
-history = autoencoder.fit(x_train, x_train, epochs=epochs, batch_size=100, shuffle=True, callbacks=[early_stopping])
+history = autoencoder.fit(x_train, x_train, epochs=epochs, batch_size=50, shuffle=True, callbacks=[early_stopping])
 
 decoded_eeg = autoencoder.predict(x_test)
 result_file = "actual_vs_predicted_early.txt"
