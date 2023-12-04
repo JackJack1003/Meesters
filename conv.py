@@ -58,8 +58,8 @@ train_data, test_data = data[:20], data[20:]
 samples, data_length = len(data), len(data[0][:100])
 
 
-x_train = data[:3].reshape((-1, data_length, 1))
-x_test = data[3:8].reshape((-1, data_length, 1))
+x_train = data[:10].reshape((-1, data_length, 1))
+x_test = data[10:20].reshape((-1, data_length, 1))
 # Input layer
 input_window = Input(shape=(data_length, 1))
 
@@ -87,7 +87,7 @@ autoencoder.summary()
 # Compile and train the model
 autoencoder.compile(optimizer='adam', loss='binary_crossentropy')
 epochs = 10  # Adjust as needed
-history =autoencoder.fit(x_train, x_train, epochs=epochs, batch_size=10, shuffle=True)
+history =autoencoder.fit(x_train, x_train, epochs=epochs, batch_size=50, shuffle=True)
 decoded_eeg = autoencoder.predict(x_test)
 result_file = "actual_vs_predicted.txt"
 
