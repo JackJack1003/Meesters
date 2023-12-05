@@ -65,14 +65,14 @@ input_window = Input(shape=(data_length, 1))
 
 
 # Encoder
-x = Conv1D(16, 3, activation="relu", padding="same")(input_window)  
+x = Conv1D(32, 3, activation="relu", padding="same")(input_window)  
 encoded = MaxPooling1D(2, padding="same")(x)  # 3 dims
 
 # Encoder model
 encoder = Model(input_window, encoded)
 
 # Decoder
-x = Conv1D(16, 3, activation="relu", padding="same")(encoded)  # 3 dims
+x = Conv1D(32, 3, activation="relu", padding="same")(encoded)  # 3 dims
 x = UpSampling1D(2)(x)  # 6 dims
 decoded = Conv1D(1, 3, activation='sigmoid', padding='same')(x)  # 10 dims
 
