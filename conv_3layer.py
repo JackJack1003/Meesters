@@ -120,8 +120,8 @@ with open(result_file, "w") as file:
         file.write("\t".join([str(val) for val in actual]) + "\t" + "\t".join([str(val) for val in predicted]) + "\n")
 
 # Save the loss history to a text file
-loss_history_file = "loss_history.txt"
-with open(loss_history_file, "w") as file:
-    file.write("Epoch\tLoss\n")
-    for i in range(epochs):
-        file.write(f"{i + 1}\t{history.history['loss'][i]}\n")
+# loss_history_file = "loss_history.txt"
+# with open(loss_history_file, "w") as file:
+#     file.write("Epoch\tLoss\n")
+#     for i in range(epochs):
+#         file.write(f"{i + 1}\t{history.history['loss'][i]}\n")
