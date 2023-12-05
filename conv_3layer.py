@@ -11,6 +11,7 @@ from keras import optimizers
 import math
 from keras.layers import Input, Conv1D, MaxPooling1D, UpSampling1D
 from keras.models import Model
+from keras.callbacks import EarlyStopping
 
 print('Starting 2auto')
 def normalize(data):
@@ -98,7 +99,8 @@ print('1 Decoded: ', np.shape(x))
 decoded = Conv1D(1, 4, activation='sigmoid', padding='same')(x)  # 24 dims
 print('DECODED se FINAL shape:' , np.shape(decoded))
 
-
+threshold_loss = 0.0005  # Set your desired threshold
+early_stopping = EarlyStopping(monitor='loss', patience=3, mode='min', min_delta=threshold_loss)
 # Autoencoder model
 autoencoder = Model(input_window, decoded)
 autoencoder.summary()
@@ -106,7 +108,7 @@ autoencoder.summary()
 # Compile and train the model
 autoencoder.compile(optimizer='adam', loss='binary_crossentropy')
 epochs = 10  # Adjust as needed
-history =autoencoder.fit(x_train, x_train, epochs=epochs, batch_size=10, shuffle=True)
+history =autoencoder.fit(x_train, x_train, epochs=epochs, batch_size=10, shuffle=True, callbacks=[early_stopping])
 decoded_eeg = autoencoder.predict(x_test)
 result_file = "actual_vs_predicted.txt"
 
