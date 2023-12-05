@@ -65,15 +65,15 @@ input_window = Input(shape=(data_length, 1))
 
 
 # Encoder
-x = Conv1D(32, 8, activation="relu", padding="same")(input_window) 
+x = Conv1D(24, 8, activation="relu", padding="same")(input_window) 
 print('1 Encoded: ', np.shape(x)) 
 x = MaxPooling1D(2, padding="same")(x)  # 5 dims
 print('2 Encoded: ', np.shape(x)) 
-x = Conv1D(16, 8, activation="relu", padding="same")(x)  # 5 dims
+x = Conv1D(12, 8, activation="relu", padding="same")(x)  # 5 dims
 print('3 Encoded: ', np.shape(x)) 
 x = MaxPooling1D(2, padding="same")(x)  # 5 dims
 print('4 Encoded: ', np.shape(x)) 
-x = Conv1D(8, 8, activation="relu", padding="same")(x)  # 5 dims
+x = Conv1D(4, 8, activation="relu", padding="same")(x)  # 5 dims
 print('5 Encoded: ', np.shape(x)) 
 encoded = MaxPooling1D(2, padding="same")(x)  # 3 dims
 
@@ -83,15 +83,15 @@ print('ENCODED se FINAL shape:' , np.shape(encoded))
 
 
 # Decoder
-x = Conv1D(8, 8, activation="relu", padding="same")(encoded)  # 3 dims
+x = Conv1D(4, 8, activation="relu", padding="same")(encoded)  # 3 dims
 print('1 Decoded: ', np.shape(x)) 
 x = UpSampling1D(2)(x) 
 print('1 Decoded: ', np.shape(x)) 
-x = Conv1D(16, 8, activation="relu", padding="same")(x)  # 6 dims (not encoded)
+x = Conv1D(12, 8, activation="relu", padding="same")(x)  # 6 dims (not encoded)
 print('1 Decoded: ', np.shape(x)) 
 x = UpSampling1D(2)(x)  # 12 dims
 print('1 Decoded: ', np.shape(x)) 
-x = Conv1D(32, 8, activation='relu', padding="same")(x)  # 12 dims
+x = Conv1D(24, 8, activation='relu', padding="same")(x)  # 12 dims
 print('1 Decoded: ', np.shape(x)) 
 x = UpSampling1D(2)(x)  # 24 dims
 print('1 Decoded: ', np.shape(x)) 
