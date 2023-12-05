@@ -74,7 +74,7 @@ x = Conv1D(5, 8, activation="relu", padding="same")(x)  # 5 dims
 print('3 Encoded: ', np.shape(x)) 
 x = MaxPooling1D(2, padding="same")(x)  # 5 dims
 print('4 Encoded: ', np.shape(x)) 
-x = Conv1D(2, 8, activation="relu", padding="same")(x)  # 5 dims
+x = Conv1D(1, 8, activation="relu", padding="same")(x)  # 5 dims
 print('5 Encoded: ', np.shape(x)) 
 encoded = MaxPooling1D(2, padding="same")(x)  # 3 dims
 
@@ -84,7 +84,7 @@ print('ENCODED se FINAL shape:' , np.shape(encoded))
 
 
 # Decoder
-x = Conv1D(2, 8, activation="relu", padding="same")(encoded)  # 3 dims
+x = Conv1D(1, 8, activation="relu", padding="same")(encoded)  # 3 dims
 print('1 Decoded: ', np.shape(x)) 
 x = UpSampling1D(2)(x) 
 print('1 Decoded: ', np.shape(x)) 
